@@ -570,6 +570,7 @@ function displayResult() {
 }
 
 // ГЕНЕРАЦИЯ И СОХРАНЕНИЕ КАРТИНКИ (ПОЛНАЯ ВЕРСИЯ)
+// ГЕНЕРАЦИЯ И СОХРАНЕНИЕ КАРТИНКИ (ИСПРАВЛЕННАЯ ВЕРСИЯ)
 function shareAsImage() {
     const profile = appState.resultProfile;
     
@@ -812,25 +813,31 @@ function shareAsImage() {
             document.head.removeChild(fontAwesomeLink);
             document.head.removeChild(googleFontLink);
             
-            // Создаем ссылку для скачивания
-            const link = document.createElement('a');
+            // Создаем ссылку для скачивания (ИЗМЕНЕНО: переименовали переменную)
+            const downloadLink = document.createElement('a');
             const fileName = `cognitive-compass-${profile.name.replace(/\s+/g, '-').toLowerCase()}.png`;
-            link.download = fileName;
-            link.href = canvas.toDataURL('image/png');
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
+            downloadLink.download = fileName;
+            downloadLink.href = canvas.toDataURL('image/png');
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+            document.body.removeChild(downloadLink);
             
             showNotification('Карточка сохранена в галерею!');
         }).catch(error => {
             console.error('Ошибка создания изображения:', error);
-            showNotification('Не удалось создать картинку. Попробуйте другой способ.');
             
             // Удаляем временные элементы при ошибке
-            document.head.removeChild(fontAwesomeLink);
-            document.head.removeChild(googleFontLink);
+            if (document.head.contains(fontAwesomeLink)) {
+                document.head.removeChild(fontAwesomeLink);
+            }
+            if (document.head.contains(googleFontLink)) {
+                document.head.removeChild(googleFontLink);
+            }
+            
+            // Показываем альтернативный способ
+            showNotification('Не удалось создать картинку. Скопируйте текст результата и поделитесь им!');
         });
-    }, 1500); // Увеличили время ожидания для загрузки шрифтов
+    }, 1500);
 }
 
 // ПОДЕЛИТЬСЯ ТЕКСТОМ (С УПОМИНАНИЕМ КАНАЛА)
