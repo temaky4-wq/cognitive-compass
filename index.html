@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Убрали animate.css - используем кастомные анимации -->
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧠</text></svg>">
 </head>
 <body>
     <div class="container">
@@ -120,16 +120,24 @@
                     </div>
                     
                     <div class="detail-section">
-                        <h3><i class="fas fa-lightbulb"></i> Инсайты</h3>
+                        <h3><i class="fas fa-lightbulb"></i> Инсайты о тебе</h3>
                         <div class="insights" id="insights-container">
                             <!-- Инсайты генерируются скриптом -->
                         </div>
                     </div>
                 </div>
                 
+                <!-- Кнопка подписки на канал -->
+                <div class="subscribe-section">
+                    <a href="https://t.me/grehfacts" target="_blank" class="btn-telegram">
+                        <i class="fab fa-telegram"></i> Подписаться на @grehfacts
+                    </a>
+                    <p class="subscribe-hint">Ещё больше интересного о психологии!</p>
+                </div>
+                
                 <div class="actions-container">
                     <button id="share-image-btn" class="btn-action btn-share">
-                        <i class="fas fa-image"></i> Сохранить картинку
+                        <i class="fas fa-image"></i> Сохранить карточку
                     </button>
                     <button id="share-text-btn" class="btn-action btn-secondary">
                         <i class="fas fa-link"></i> Скопировать результат
@@ -140,18 +148,16 @@
                 </div>
                 
                 <div class="result-footer">
-                    <p>Ещё больше интересного о психологии в нашем Telegram-канале!</p>
-                    <a href="https://t.me/grehfacts" target="_blank" class="telegram-link">
-                        <i class="fab fa-telegram"></i> @grehfacts
-                    </a>
+                    <p>Поделись своим профилем с друзьями и сравните результаты!</p>
+                    <div class="social-hint">
+                        <i class="fas fa-hashtag"></i> CognitiveCompass
+                    </div>
                 </div>
             </div>
         </section>
         
-        <!-- Холст для генерации изображения (скрытый) -->
-        <div id="image-generator" style="position: absolute; left: -9999px; top: -9999px; width: 800px; background: #0f172a; padding: 30px; border-radius: 20px; font-family: 'Inter', sans-serif;">
-            <!-- Сюда будет скопирована карточка для рендеринга -->
-        </div>
+        <!-- Скрытый контейнер для генерации изображения -->
+        <div id="image-generator" style="position: absolute; left: -9999px; top: -9999px; width: 800px; font-family: 'Inter', sans-serif;"></div>
         
         <!-- УВЕДОМЛЕНИЕ -->
         <div class="notification" id="notification">
@@ -162,7 +168,6 @@
         </div>
     </div>
     
-    <!-- Локальная версия html2canvas для обхода CORS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="script.js"></script>
 </body>
