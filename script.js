@@ -185,8 +185,8 @@ const elements = {
     notification: document.getElementById('notification'),
     notificationText: document.getElementById('notification-text'),
     
-    // Canvas
-    resultCanvas: document.getElementById('result-canvas')
+    // Генератор изображений
+    imageGenerator: document.getElementById('image-generator')
 };
 
 // ОТВЕТЫ ПОЛЬЗОВАТЕЛЯ (5-балльная шкала)
@@ -200,9 +200,6 @@ const answerOptions = [
 
 // ИНИЦИАЛИЗАЦИЯ
 function initApp() {
-    // Загружаем сохраненный прогресс
-    loadProgress();
-    
     // Настройка экрана
     showScreen(appState.currentScreen);
     
@@ -213,30 +210,6 @@ function initApp() {
     initTest();
 }
 
-// ЗАГРУЗКА СОХРАНЕННОГО ПРОГРЕССА
-function loadProgress() {
-    const saved = localStorage.getItem('cognitiveCompassProgress');
-    if (saved) {
-        try {
-            const data = JSON.parse(saved);
-            if (data.currentQuestion > 0 || Object.keys(data.answers).length > 0) {
-                if (confirm('У вас есть незавершенный тест. Продолжить?')) {
-                    appState = data;
-                } else {
-                    localStorage.removeItem('cognitiveCompassProgress');
-                }
-            }
-        } catch (e) {
-            console.error('Ошибка загрузки прогресса:', e);
-        }
-    }
-}
-
-// СОХРАНЕНИЕ ПРОГРЕССА
-function saveProgress() {
-    localStorage.setItem('cognitiveCompassProgress', JSON.stringify(appState));
-}
-
 // НАСТРОЙКА ОБРАБОТЧИКОВ СОБЫТИЙ
 function setupEventListeners() {
     elements.startBtn.addEventListener('click', () => {
@@ -244,19 +217,66 @@ function setupEventListeners() {
         saveProgress();
     });
     
-    elements.backBtn.addEventListener('click', () => {
-        if (appState.currentQuestion > 0) {
-            appState.currentQuestion--;
-            loadQuestion();
-            saveProgress();
-        } else {
-            showScreen('welcome');
-        }
-    });
+    elements.backBtn.addEventListener('click', handleBack);
     
     elements.shareImageBtn.addEventListener('click', shareAsImage);
     elements.shareTextBtn.addEventListener('click', shareAsText);
     elements.restartBtn.addEventListener('click', restartTest);
+    
+    // Обработка свайпов на мобильных
+    setupSwipeGestures();
+}
+
+// ОБРАБОТКА НАЗАД
+function handleBack() {
+    if (appState.currentQuestion > 0) {
+        appState.currentQuestion--;
+        loadQuestion();
+        saveProgress();
+    } else {
+        showScreen('welcome');
+    }
+}
+
+// НАСТРОЙКА СВАЙПОВ
+function setupSwipeGestures() {
+    let startX = 0;
+    let startY = 0;
+    
+    document.addEventListener('touchstart', (e) => {
+        startX = e.touches[0].clientX;
+        startY = e.touches[0].clientY;
+    });
+    
+    document.addEventListener('touchend', (e) => {
+        if (!startX || !startY) return;
+        
+        const endX = e.changedTouches[0].clientX;
+        const endY = e.changedTouches[0].clientY;
+        
+        const diffX = startX - endX;
+        const diffY = startY - endY;
+        
+        // Проверяем, что свайп горизонтальный и не вертикальный
+        if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 50) {
+            if (diffX > 0 && appState.currentScreen === 'test') {
+                // Свайп влево - следующий вопрос
+                if (appState.answers[appState.currentQuestion] !== undefined) {
+                    nextQuestion();
+                }
+            } else if (diffX < 0 && appState.currentScreen === 'test') {
+                // Свайп вправо - предыдущий вопрос
+                if (appState.currentQuestion > 0) {
+                    appState.currentQuestion--;
+                    loadQuestion();
+                    saveProgress();
+                }
+            }
+        }
+        
+        startX = 0;
+        startY = 0;
+    });
 }
 
 // ПОКАЗ ЭКРАНА
@@ -268,10 +288,15 @@ function showScreen(screenName) {
     elements.screens[screenName].classList.add('active');
     appState.currentScreen = screenName;
     
+    // Прокрутка вверх при смене экрана
+    window.scrollTo(0, 0);
+    
     // Анимация появления
     if (screenName === 'result' && appState.resultProfile) {
-        displayResult();
-        animateResult();
+        setTimeout(() => {
+            displayResult();
+            animateResult();
+        }, 100);
     }
 }
 
@@ -314,12 +339,6 @@ function loadQuestion() {
         
         elements.optionsContainer.appendChild(optionBtn);
     });
-    
-    // Анимация появления вопроса
-    const questionCard = document.querySelector('.question-card');
-    questionCard.classList.remove('animate__fadeInRight');
-    void questionCard.offsetWidth; // Перезапуск анимации
-    questionCard.classList.add('animate__fadeInRight');
 }
 
 // ВЫБОР ОТВЕТА
@@ -417,7 +436,7 @@ function displayResult() {
     // Заполняем основную карточку
     elements.resultMainCard.innerHTML = `
         <div class="profile-header">
-            <div class="profile-icon">
+            <div class="profile-icon" style="background: linear-gradient(135deg, ${profile.color}, ${profile.color}dd)">
                 <i class="${profile.icon}"></i>
             </div>
             <div class="profile-title">
@@ -462,104 +481,252 @@ function displayResult() {
     // Настраиваем форму результата
     elements.resultShape.innerHTML = `<i class="${profile.icon}"></i>`;
     elements.resultShape.style.background = `linear-gradient(135deg, ${profile.color}, ${profile.color}dd)`;
-    
-    // Анимация появления
-    elements.resultMainCard.classList.remove('animate__fadeInUp');
-    void elements.resultMainCard.offsetWidth;
-    elements.resultMainCard.classList.add('animate__fadeInUp');
 }
 
 // АНИМАЦИЯ РЕЗУЛЬТАТА
 function animateResult() {
     const shape = elements.resultShape;
-    shape.classList.add('float-animation');
-    
-    // Создаем частицы
-    createParticles();
+    shape.style.animation = 'pulse 3s infinite';
 }
 
-// СОЗДАНИЕ ЧАСТИЦ
-function createParticles() {
-    const particlesContainer = document.getElementById('particles');
-    if (!particlesContainer) return;
-    
-    particlesContainer.innerHTML = '';
-    
-    for (let i = 0; i < 30; i++) {
-        const particle = document.createElement('div');
-        particle.style.position = 'absolute';
-        particle.style.width = '4px';
-        particle.style.height = '4px';
-        particle.style.background = appState.resultProfile.color;
-        particle.style.borderRadius = '50%';
-        particle.style.left = `${Math.random() * 100}%`;
-        particle.style.top = `${Math.random() * 100}%`;
-        particle.style.opacity = '0.7';
-        particle.style.animation = `float ${3 + Math.random() * 4}s infinite ease-in-out`;
-        particle.style.animationDelay = `${Math.random() * 2}s`;
-        
-        particlesContainer.appendChild(particle);
+// СОХРАНЕНИЕ ПРОГРЕССА
+function saveProgress() {
+    const progress = {
+        currentQuestion: appState.currentQuestion,
+        answers: appState.answers,
+        scores: appState.scores
+    };
+    localStorage.setItem('cognitiveCompassProgress', JSON.stringify(progress));
+}
+
+// ЗАГРУЗКА ПРОГРЕССА
+function loadProgress() {
+    const saved = localStorage.getItem('cognitiveCompassProgress');
+    if (saved) {
+        try {
+            const data = JSON.parse(saved);
+            if (data.currentQuestion > 0 || Object.keys(data.answers).length > 0) {
+                const shouldContinue = confirm('У вас есть незавершенный тест. Продолжить?');
+                if (shouldContinue) {
+                    appState.currentQuestion = data.currentQuestion;
+                    appState.answers = data.answers;
+                    appState.scores = data.scores;
+                } else {
+                    localStorage.removeItem('cognitiveCompassProgress');
+                }
+            }
+        } catch (e) {
+            console.error('Ошибка загрузки прогресса:', e);
+        }
     }
 }
 
-// ПОДЕЛИТЬСЯ КАК ИЗОБРАЖЕНИЕ
+// ПОДЕЛИТЬСЯ КАК ИЗОБРАЖЕНИЕ (ИСПРАВЛЕННЫЙ МЕТОД)
 function shareAsImage() {
-    const card = elements.resultMainCard;
+    const profile = appState.resultProfile;
     
-    // Временно меняем стили для скриншота
-    const originalStyles = {
-        margin: card.style.margin,
-        boxShadow: card.style.boxShadow,
-        transform: card.style.transform
-    };
+    // Создаем HTML для картинки с более простыми стилями
+    const imageHTML = `
+        <div style="
+            width: 800px;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: white;
+            font-family: 'Inter', sans-serif;
+            padding: 40px;
+            border-radius: 24px;
+            position: relative;
+            overflow: hidden;
+            box-sizing: border-box;
+        ">
+            <div style="
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 5px;
+                background: linear-gradient(90deg, ${profile.color}, ${profile.color}cc);
+            "></div>
+            
+            <div style="display: flex; align-items: center; gap: 25px; margin-bottom: 30px;">
+                <div style="
+                    width: 100px;
+                    height: 100px;
+                    border-radius: 50%;
+                    background: linear-gradient(135deg, ${profile.color}, ${profile.color}dd);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-size: 3rem;
+                    color: white;
+                    flex-shrink: 0;
+                ">
+                    <i class="${profile.icon}"></i>
+                </div>
+                
+                <div>
+                    <h1 style="
+                        font-size: 2.8rem;
+                        font-weight: 800;
+                        margin: 0 0 8px 0;
+                        background: linear-gradient(to right, #a5b4fc, ${profile.color});
+                        -webkit-background-clip: text;
+                        -webkit-text-fill-color: transparent;
+                    ">
+                        ${profile.name}
+                    </h1>
+                    <p style="
+                        color: ${profile.color}cc;
+                        font-size: 1.2rem;
+                        font-weight: 500;
+                        margin: 0;
+                    ">
+                        ${profile.subtitle}
+                    </p>
+                </div>
+            </div>
+            
+            <div style="
+                font-size: 1.4rem;
+                line-height: 1.6;
+                margin-bottom: 30px;
+                color: rgba(255, 255, 255, 0.9);
+            ">
+                ${profile.description}
+            </div>
+            
+            <div style="display: flex; gap: 15px; margin-bottom: 30px; flex-wrap: wrap;">
+                ${profile.tags.map(tag => `
+                    <span style="
+                        background: rgba(255, 255, 255, 0.1);
+                        color: ${profile.color}cc;
+                        padding: 10px 20px;
+                        border-radius: 50px;
+                        font-size: 1.1rem;
+                        font-weight: 600;
+                        border: 2px solid ${profile.color}66;
+                    ">
+                        ${tag}
+                    </span>
+                `).join('')}
+            </div>
+            
+            <div style="
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 20px;
+                margin-bottom: 40px;
+            ">
+                ${Object.entries(profile.metrics).map(([label, value]) => `
+                    <div style="
+                        text-align: center;
+                        padding: 20px;
+                        background: rgba(255, 255, 255, 0.05);
+                        border-radius: 16px;
+                        border: 1px solid rgba(255, 255, 255, 0.1);
+                    ">
+                        <div style="
+                            font-size: 2.5rem;
+                            font-weight: 800;
+                            color: ${profile.color};
+                            margin-bottom: 8px;
+                        ">
+                            ${value}
+                        </div>
+                        <div style="
+                            font-size: 1rem;
+                            color: rgba(255, 255, 255, 0.7);
+                        ">
+                            ${label}
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+            
+            <div style="
+                text-align: center;
+                padding-top: 25px;
+                border-top: 1px solid rgba(255, 255, 255, 0.1);
+                color: rgba(255, 255, 255, 0.6);
+                font-size: 1rem;
+            ">
+                Пройдите тест на cognitivecompass.github.io
+                <div style="margin-top: 15px; font-weight: 600; color: #40a3dd;">
+                    Ещё больше интересного в Telegram: @grehfacts
+                </div>
+            </div>
+        </div>
+    `;
     
-    card.style.margin = '0 auto';
-    card.style.boxShadow = 'none';
-    card.style.transform = 'none';
+    // Вставляем HTML в генератор
+    elements.imageGenerator.innerHTML = imageHTML;
     
-    // Используем html2canvas для создания скриншота
-    html2canvas(card, {
-        backgroundColor: '#0f172a',
-        scale: 2,
-        useCORS: true
-    }).then(canvas => {
-        // Восстанавливаем стили
-        card.style.margin = originalStyles.margin;
-        card.style.boxShadow = originalStyles.boxShadow;
-        card.style.transform = originalStyles.transform;
-        
-        // Создаем ссылку для скачивания
-        const link = document.createElement('a');
-        link.download = `cognitive-compass-${appState.resultProfile.name}.png`;
-        link.href = canvas.toDataURL('image/png');
-        link.click();
-        
-        showNotification('Карточка сохранена в галерею!');
-    }).catch(error => {
-        console.error('Ошибка создания изображения:', error);
-        showNotification('Не удалось создать карточку. Попробуйте другой способ.');
-        
-        // Восстанавливаем стили при ошибке
-        card.style.margin = originalStyles.margin;
-        card.style.boxShadow = originalStyles.boxShadow;
-        card.style.transform = originalStyles.transform;
-    });
+    // Загружаем Font Awesome для иконок
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css';
+    document.head.appendChild(link);
+    
+    // Ждём загрузки шрифтов и иконок
+    setTimeout(() => {
+        // Используем html2canvas с исправленными параметрами
+        html2canvas(elements.imageGenerator, {
+            backgroundColor: '#0f172a',
+            scale: 2,
+            useCORS: true,
+            logging: false,
+            allowTaint: true,
+            onclone: function(clonedDoc) {
+                // Копируем стили в клонированный документ
+                const style = clonedDoc.createElement('style');
+                style.textContent = `
+                    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+                    * { font-family: 'Inter', sans-serif !important; }
+                `;
+                clonedDoc.head.appendChild(style);
+            }
+        }).then(canvas => {
+            // Удаляем временный элемент
+            document.head.removeChild(link);
+            
+            // Создаем ссылку для скачивания
+            const link = document.createElement('a');
+            link.download = `cognitive-compass-${profile.name.replace(/\s+/g, '-').toLowerCase()}.png`;
+            link.href = canvas.toDataURL('image/png');
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            showNotification('Картинка сохранена в галерею!');
+        }).catch(error => {
+            console.error('Ошибка создания изображения:', error);
+            showNotification('Не удалось создать картинку. Попробуйте другой способ.');
+            document.head.removeChild(link);
+        });
+    }, 1000);
 }
 
-// ПОДЕЛИТЬСЯ ТЕКСТОМ
+// ПОДЕЛИТЬСЯ ТЕКСТОМ С ИНТЕГРАЦИЕЙ ТЕЛЕГРАМ
 function shareAsText() {
     const profile = appState.resultProfile;
     
-    const text = `🧠 Мой когнитивный профиль: ${profile.name}
+    const text = `🧠 Cognitive Compass
+
+Мой когнитивный профиль: ${profile.name}
+${profile.subtitle}
 
 ${profile.description}
 
-${profile.tags.map(tag => `#${tag}`).join(' ')}
+Мои показатели:
+${Object.entries(profile.metrics).map(([label, value]) => `• ${label}: ${value}`).join('\n')}
 
-Пройди тест Cognitive Compass и узнай свой тип мышления!`;
+${profile.tags.map(tag => `#${tag}`).join(' ')} #CognitiveCompass
+
+Ещё больше интересного о психологии в Telegram: @grehfacts
+
+Пройти тест: https://cognitivecompass.github.io`;
 
     navigator.clipboard.writeText(text).then(() => {
-        showNotification('Текст скопирован! Можешь поделиться в соцсетях');
+        showNotification('Текст скопирован! Можешь поделиться в Telegram');
     }).catch(() => {
         // Fallback для старых браузеров
         const textArea = document.createElement('textarea');
@@ -591,6 +758,7 @@ function restartTest() {
         
         showScreen('welcome');
         initTest();
+        localStorage.removeItem('cognitiveCompassProgress');
     }
 }
 
@@ -605,4 +773,9 @@ function showNotification(message) {
 }
 
 // ЗАПУСК ПРИ ЗАГРУЗКЕ СТРАНИЦЫ
-document.addEventListener('DOMContentLoaded', initApp);
+document.addEventListener('DOMContentLoaded', () => {
+    // Сначала загружаем прогресс
+    loadProgress();
+    // Затем инициализируем приложение
+    initApp();
+});
