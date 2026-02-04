@@ -3,136 +3,163 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cognitive Compass | Тест когнитивного стиля</title>
+    <title>Cognitive Compass | Тест мышления</title>
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
 </head>
 <body>
     <div class="container">
-        <!-- Экран приветствия -->
+        <!-- ЭКРАН ПРИВЕТСТВИЯ -->
         <section id="welcome-screen" class="screen active">
-            <div class="logo">
-                <i class="fas fa-brain"></i>
-                <h1>Cognitive Compass</h1>
+            <div class="welcome-header">
+                <div class="logo-circle animate__animated animate__pulse">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <h1 class="animate__animated animate__fadeInDown">Cognitive<br>Compass</h1>
+                <p class="tagline">Как работает твой разум?</p>
             </div>
+            
             <div class="welcome-content">
-                <h2>Как ваш разум ориентируется в мире?</h2>
-                <p class="subtitle">Научный тест на основе модели Big Five и исследований когнитивных стилей[citation:1][citation:2]</p>
-                
-                <div class="features">
-                    <div class="feature">
-                        <i class="fas fa-flask"></i>
-                        <span>Научный подход</span>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <h3>8 вопросов</h3>
+                        <p>Быстро и по делу</p>
                     </div>
-                    <div class="feature">
-                        <i class="fas fa-clock"></i>
-                        <span>3 минуты</span>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-network"></i>
+                        </div>
+                        <h3>5 профилей</h3>
+                        <p>Узнай свой стиль</p>
                     </div>
-                    <div class="feature">
-                        <i class="fas fa-chart-bar"></i>
-                        <span>5 профилей</span>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-share-nodes"></i>
+                        </div>
+                        <h3>Карточка</h3>
+                        <p>Поделись с друзьями</p>
                     </div>
                 </div>
                 
-                <div class="test-info">
-                    <p><strong>Узнайте свой когнитивный стиль:</strong></p>
-                    <ul>
-                        <li>Как вы принимаете решения</li>
-                        <li>Как реагируете на неопределённость</li>
-                        <li>Ваши сильные стороны и риски</li>
-                    </ul>
+                <div class="cta-section">
+                    <button id="start-btn" class="btn-glow">
+                        <span class="btn-text">Начать путешествие</span>
+                        <i class="fas fa-arrow-right btn-icon"></i>
+                    </button>
+                    <p class="hint">Тест основан на концепциях когнитивной психологии</p>
                 </div>
-                
-                <button id="start-btn" class="btn-primary">
-                    Начать тест <i class="fas fa-arrow-right"></i>
-                </button>
-                
-                <p class="disclaimer">Тест не заменяет профессиональную психологическую диагностику. Основан на научных моделях[citation:3][citation:9].</p>
             </div>
+            
+            <div class="wave-background"></div>
         </section>
         
-        <!-- Экран теста -->
+        <!-- ЭКРАН ТЕСТА -->
         <section id="test-screen" class="screen">
-            <div class="header">
-                <div class="logo-small">
-                    <i class="fas fa-brain"></i>
-                    <span>Cognitive Compass</span>
+            <div class="test-header">
+                <div class="header-left">
+                    <button id="back-btn" class="btn-back">
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                    <div class="progress-info">
+                        <span id="current-question">1</span>/<span id="total-questions">8</span>
+                    </div>
                 </div>
                 <div class="progress-container">
-                    <div class="progress-bar">
-                        <div class="progress-fill" id="progress-fill"></div>
+                    <div class="progress-track">
+                        <div class="progress-indicator" id="progress-indicator"></div>
                     </div>
-                    <span class="progress-text" id="progress-text">Вопрос 1 из 8</span>
                 </div>
             </div>
             
-            <div class="question-container">
-                <h2 id="question-text"></h2>
-                <div class="options-container" id="options-container">
-                    <!-- Варианты ответов генерируются динамически -->
+            <div class="question-wrapper">
+                <div class="question-card animate__animated" id="question-card">
+                    <h2 id="question-text">Текст вопроса</h2>
+                    <div class="options-grid" id="options-container">
+                        <!-- Варианты генерируются скриптом -->
+                    </div>
                 </div>
             </div>
             
-            <div class="navigation">
-                <button id="prev-btn" class="btn-secondary" disabled>
-                    <i class="fas fa-arrow-left"></i> Назад
-                </button>
-                <button id="next-btn" class="btn-primary" disabled>
-                    Далее <i class="fas fa-arrow-right"></i>
-                </button>
+            <div class="test-footer">
+                <div class="hint">Выберите ответ, который ближе всего к вам</div>
             </div>
+            
+            <div class="particles" id="particles"></div>
         </section>
         
-        <!-- Экран результатов -->
+        <!-- ЭКРАН РЕЗУЛЬТАТА -->
         <section id="result-screen" class="screen">
             <div class="result-header">
-                <h2>Ваш когнитивный профиль</h2>
-                <p class="subtitle">Основан на ваших ответах и модели Big Five[citation:1][citation:9]</p>
+                <div class="result-title">
+                    <h2>Ваш когнитивный профиль</h2>
+                    <p>Определён по вашим ответам</p>
+                </div>
+                <div class="result-shape" id="result-shape">
+                    <!-- Анимированная форма будет здесь -->
+                </div>
             </div>
             
-            <div class="result-card" id="result-card">
-                <!-- Карточка результата генерируется динамически -->
-            </div>
-            
-            <div class="result-actions">
-                <button id="share-btn" class="btn-share">
-                    <i class="fas fa-share-alt"></i> Поделиться результатом
-                </button>
-                <button id="restart-btn" class="btn-secondary">
-                    <i class="fas fa-redo"></i> Пройти ещё раз
-                </button>
-            </div>
-            
-            <div class="result-details">
-                <h3>О модели Cognitive Compass</h3>
-                <p>Эта типология основана на научных исследованиях когнитивных стилей и личности[citation:2][citation:9]. Она описывает, как люди воспринимают информацию, принимают решения и реагируют на неопределённость.</p>
+            <div class="result-wrapper">
+                <div class="result-main-card animate__animated" id="result-main-card">
+                    <!-- Карточка результата генерируется скриптом -->
+                </div>
                 
-                <div class="traits-explained">
-                    <div class="trait">
-                        <h4><i class="fas fa-lightbulb"></i> Открытость (Openness)</h4>
-                        <p>Склонность к новому опыту, любопытство, креативность</p>
+                <div class="result-details">
+                    <div class="detail-section">
+                        <h3><i class="fas fa-tachometer-alt"></i> Твои показатели</h3>
+                        <div class="metrics-grid" id="metrics-container">
+                            <!-- Метрики генерируются скриптом -->
+                        </div>
                     </div>
-                    <div class="trait">
-                        <h4><i class="fas fa-tasks"></i> Добросовестность (Conscientiousness)</h4>
-                        <p>Организованность, самодисциплина, стремление к достижениям</p>
+                    
+                    <div class="detail-section">
+                        <h3><i class="fas fa-lightbulb"></i> Инсайты</h3>
+                        <div class="insights" id="insights-container">
+                            <!-- Инсайты генерируются скриптом -->
+                        </div>
                     </div>
-                    <div class="trait">
-                        <h4><i class="fas fa-bullseye"></i> Толерантность к неопределённости</h4>
-                        <p>Комфорт в неясных ситуациях, гибкость мышления[citation:2]</p>
+                </div>
+                
+                <div class="actions-container">
+                    <button id="share-image-btn" class="btn-action btn-share">
+                        <i class="fas fa-image"></i> Сохранить карточку
+                    </button>
+                    <button id="share-text-btn" class="btn-action btn-secondary">
+                        <i class="fas fa-link"></i> Скопировать текст
+                    </button>
+                    <button id="restart-btn" class="btn-action btn-restart">
+                        <i class="fas fa-redo"></i> Пройти ещё раз
+                    </button>
+                </div>
+                
+                <div class="result-footer">
+                    <p>Поделись своим профилем с друзьями и сравните результаты!</p>
+                    <div class="social-hint">
+                        <i class="fas fa-hashtag"></i> CognitiveCompass
                     </div>
                 </div>
             </div>
+            
+            <canvas id="result-canvas" style="display:none;"></canvas>
         </section>
         
-        <!-- Уведомление -->
-        <div id="notification" class="notification">
-            <span id="notification-text">Текст скопирован!</span>
+        <!-- УВЕДОМЛЕНИЕ -->
+        <div class="notification" id="notification">
+            <div class="notification-content">
+                <i class="fas fa-check-circle"></i>
+                <span id="notification-text">Текст уведомления</span>
+            </div>
         </div>
     </div>
     
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
