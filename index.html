@@ -2,24 +2,24 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Cognitive Compass | Тест мышления</title>
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <!-- Убрали animate.css - используем кастомные анимации -->
 </head>
 <body>
     <div class="container">
         <!-- ЭКРАН ПРИВЕТСТВИЯ -->
         <section id="welcome-screen" class="screen active">
             <div class="welcome-header">
-                <div class="logo-circle animate__animated animate__pulse">
+                <div class="logo-circle">
                     <i class="fas fa-brain"></i>
                 </div>
-                <h1 class="animate__animated animate__fadeInDown">Cognitive<br>Compass</h1>
+                <h1>Cognitive<br>Compass</h1>
                 <p class="tagline">Как работает твой разум?</p>
             </div>
             
@@ -57,7 +57,9 @@
                 </div>
             </div>
             
-            <div class="wave-background"></div>
+            <div class="footer-note">
+                <p>Тест подготовлен для канала <a href="https://t.me/grehfacts" target="_blank" class="channel-link">@grehfacts</a></p>
+            </div>
         </section>
         
         <!-- ЭКРАН ТЕСТА -->
@@ -79,7 +81,7 @@
             </div>
             
             <div class="question-wrapper">
-                <div class="question-card animate__animated" id="question-card">
+                <div class="question-card" id="question-card">
                     <h2 id="question-text">Текст вопроса</h2>
                     <div class="options-grid" id="options-container">
                         <!-- Варианты генерируются скриптом -->
@@ -90,8 +92,6 @@
             <div class="test-footer">
                 <div class="hint">Выберите ответ, который ближе всего к вам</div>
             </div>
-            
-            <div class="particles" id="particles"></div>
         </section>
         
         <!-- ЭКРАН РЕЗУЛЬТАТА -->
@@ -107,7 +107,7 @@
             </div>
             
             <div class="result-wrapper">
-                <div class="result-main-card animate__animated" id="result-main-card">
+                <div class="result-main-card" id="result-main-card">
                     <!-- Карточка результата генерируется скриптом -->
                 </div>
                 
@@ -129,10 +129,10 @@
                 
                 <div class="actions-container">
                     <button id="share-image-btn" class="btn-action btn-share">
-                        <i class="fas fa-image"></i> Сохранить карточку
+                        <i class="fas fa-image"></i> Сохранить картинку
                     </button>
                     <button id="share-text-btn" class="btn-action btn-secondary">
-                        <i class="fas fa-link"></i> Скопировать текст
+                        <i class="fas fa-link"></i> Скопировать результат
                     </button>
                     <button id="restart-btn" class="btn-action btn-restart">
                         <i class="fas fa-redo"></i> Пройти ещё раз
@@ -140,15 +140,18 @@
                 </div>
                 
                 <div class="result-footer">
-                    <p>Поделись своим профилем с друзьями и сравните результаты!</p>
-                    <div class="social-hint">
-                        <i class="fas fa-hashtag"></i> CognitiveCompass
-                    </div>
+                    <p>Ещё больше интересного о психологии в нашем Telegram-канале!</p>
+                    <a href="https://t.me/grehfacts" target="_blank" class="telegram-link">
+                        <i class="fab fa-telegram"></i> @grehfacts
+                    </a>
                 </div>
             </div>
-            
-            <canvas id="result-canvas" style="display:none;"></canvas>
         </section>
+        
+        <!-- Холст для генерации изображения (скрытый) -->
+        <div id="image-generator" style="position: absolute; left: -9999px; top: -9999px; width: 800px; background: #0f172a; padding: 30px; border-radius: 20px; font-family: 'Inter', sans-serif;">
+            <!-- Сюда будет скопирована карточка для рендеринга -->
+        </div>
         
         <!-- УВЕДОМЛЕНИЕ -->
         <div class="notification" id="notification">
@@ -159,7 +162,8 @@
         </div>
     </div>
     
-    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <!-- Локальная версия html2canvas для обхода CORS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
