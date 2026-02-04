@@ -1,507 +1,608 @@
-// Данные теста
+// ДАННЫЕ ТЕСТА
 const testData = {
-    // Вопросы основаны на сокращённой версии Big Five Inventory[citation:9] 
-    // и исследованиях когнитивных стилей[citation:2]
     questions: [
         {
             id: 1,
-            text: "Когда я сталкиваюсь с новой задачей, я сначала изучаю все детали и составляю план",
-            trait: "conscientiousness",
-            reverse: false
+            text: "В незнакомой ситуации вы сначала действуете, а потом разбираетесь?",
+            typeWeights: { explorer: 2, pioneer: 2, analyst: -1, stabilizer: -2 }
         },
         {
             id: 2,
-            text: "Неопределённость меня скорее вдохновляет, чем пугает",
-            trait: "openness",
-            reverse: false
+            text: "Вам проще принимать решения на основе цифр и фактов, а не интуиции?",
+            typeWeights: { analyst: 2, stabilizer: 1, explorer: -2, diplomat: -1 }
         },
         {
             id: 3,
-            text: "В споре я скорее уступлю, чтобы сохранить отношения, чем буду доказывать свою правоту",
-            trait: "agreeableness",
-            reverse: false
+            text: "В споре вы чаще ищете компромисс, чем отстаиваете свою позицию?",
+            typeWeights: { diplomat: 2, stabilizer: 1, pioneer: -2, analyst: -1 }
         },
         {
             id: 4,
-            text: "Я часто беспокоюсь о том, что что-то может пойти не так",
-            trait: "neuroticism",
-            reverse: false
+            text: "Новые идеи захватывают вас больше, чем доведение текущих дел до конца?",
+            typeWeights: { explorer: 2, pioneer: 1, stabilizer: -2, analyst: -1 }
         },
         {
             id: 5,
-            text: "На вечеринке я обычно активно общаюсь с новыми людьми",
-            trait: "extraversion",
-            reverse: false
+            text: "Вы часто берете на себя лидерство, даже когда вас об этом не просят?",
+            typeWeights: { pioneer: 2, analyst: 1, diplomat: -2, stabilizer: -1 }
         },
         {
             id: 6,
-            text: "Принимая важное решение, я больше доверяю своей интуиции, чем логическому анализу",
-            trait: "openness",
-            reverse: true
+            text: "Вам важно, чтобы всё было на своих местах и по плану?",
+            typeWeights: { stabilizer: 2, analyst: 1, explorer: -2, pioneer: -1 }
         },
         {
             id: 7,
-            text: "Мне проще работать, когда у меня есть чёткие инструкции и понятные ожидания",
-            trait: "conscientiousness",
-            reverse: true
+            text: "Вы легко чувствуете, что переживают другие люди, даже если они этого не показывают?",
+            typeWeights: { diplomat: 2, explorer: 1, analyst: -1, pioneer: -1 }
         },
         {
             id: 8,
-            text: "В сложной ситуации я сначала пытаюсь успокоиться, а потом искать решение",
-            trait: "neuroticism",
-            reverse: true
+            text: "Вы любите разбирать сложные задачи на части, чтобы понять их устройство?",
+            typeWeights: { analyst: 2, pioneer: 1, diplomat: -1, stabilizer: 1 }
         }
     ],
     
-    // Варианты ответов (5-балльная шкала как в BFI-S[citation:9])
-    options: [
-        { text: "Полностью не согласен", value: 1 },
-        { text: "Скорее не согласен", value: 2 },
-        { text: "Затрудняюсь ответить", value: 3 },
-        { text: "Скорее согласен", value: 4 },
-        { text: "Полностью согласен", value: 5 }
-    ],
-    
-    // Психологические профили
-    profiles: [
-        {
-            id: "analyst",
-            name: "Аналитик-Стратег",
-            subtitle: "Системное мышление, планирование, точность",
+    profiles: {
+        analyst: {
+            name: "Аналитик-Архитектор",
+            subtitle: "Системное мышление, точность, глубина",
             icon: "fas fa-chess-board",
-            color: "#4361ee",
-            description: "Вы мыслите структурированно и логично. Для вас важны детали, точность и системный подход к решению задач. Вы преуспеваете там, где нужен анализ и планирование.",
-            strengths: ["Склонность к глубокому анализу", "Умение составлять эффективные планы", "Внимание к деталям", "Системное мышление"],
-            risks: ["Можете упускать общую картину", "Склонность к чрезмерному анализу", "Трудности с импровизацией", "Неприятие неопределённости"],
-            thinkingStyle: "Аналитический, последовательный, логичный. Вы разбиваете сложные задачи на части и решаете их системно.",
-            stressReaction: "В стрессе вы стараетесь взять ситуацию под контроль через планирование. Можете стать более критичными и требовательными.",
-            scores: {
-                openness: "средняя",
-                conscientiousness: "высокая",
-                extraversion: "низкая",
-                agreeableness: "средняя",
-                neuroticism: "низкая"
-            }
+            color: "#6366f1",
+            description: "Ваш разум — это точный инструмент. Вы видите структуру там, где другие видят хаос. Для вас важны детали, логика и понимание того, как всё устроено изнутри.",
+            tags: ["Стратег", "Логик", "Системщик"],
+            metrics: {
+                "Анализ": "92%",
+                "Планирование": "85%",
+                "Структура": "78%"
+            },
+            insights: [
+                "Вы часто находите ошибки в рассуждениях других, даже если не говорите об этом вслух",
+                "Ваша любовь к деталям иногда мешает увидеть общую картину",
+                "В стрессе вы не паникуете, а систематизируете информацию"
+            ]
         },
-        {
-            id: "explorer",
-            name: "Исследователь-Новатор",
-            subtitle: "Креативность, адаптивность, любопытство",
+        explorer: {
+            name: "Исследователь-Проводник",
+            subtitle: "Любопытство, адаптивность, видение возможностей",
             icon: "fas fa-compass",
-            color: "#4cc9f0",
-            description: "Вы открыты новому опыту и легко адаптируетесь к изменениям. Ваше мышление гибкое, а любопытство помогает находить нестандартные решения.",
-            strengths: ["Высокая адаптивность", "Креативность", "Толерантность к неопределённости", "Любознательность"],
-            risks: ["Можете быть непоследовательными", "Трудности с рутиной", "Склонность к рассеянности", "Импульсивность"],
-            thinkingStyle: "Гибкий, интуитивный, холистический. Вы видите связи между разными идеями и создаёте новые комбинации.",
-            stressReaction: "В стрессе вы ищете новые пути и альтернативы. Можете стать импульсивными или слишком быстро менять решения.",
-            scores: {
-                openness: "высокая",
-                conscientiousness: "низкая",
-                extraversion: "средняя",
-                agreeableness: "средняя",
-                neuroticism: "низкая"
-            }
+            color: "#10b981",
+            description: "Вы смотрите на мир как на бесконечное поле для открытий. Новые идеи, неожиданные связи и возможности — это ваша стихия. Вы быстро адаптируетесь и находите нестандартные пути.",
+            tags: ["Новатор", "Адаптер", "Проводник"],
+            metrics: {
+                "Гибкость": "88%",
+                "Креативность": "95%",
+                "Адаптивность": "90%"
+            },
+            insights: [
+                "Вам скучно делать одно и то же дважды — вы всегда ищете новые подходы",
+                "Иногда вы начинаете больше проектов, чем можете завершить",
+                "Вы видите возможности там, где другие видят проблемы"
+            ]
         },
-        {
-            id: "diplomat",
+        diplomat: {
             name: "Дипломат-Эмпат",
-            subtitle: "Эмоциональный интеллект, гармония, сотрудничество",
+            subtitle: "Гармония, понимание, эмоциональный интеллект",
             icon: "fas fa-handshake",
-            color: "#7209b7",
-            description: "Вы тонко чувствуете эмоции других людей и стремитесь к гармонии в отношениях. Для вас важны сотрудничество и взаимопонимание.",
-            strengths: ["Высокий эмоциональный интеллект", "Умение разрешать конфликты", "Эмпатия", "Навыки сотрудничества"],
-            risks: ["Склонность к самопожертвованию", "Трудности с жёсткими решениями", "Чувствительность к критике", "Избегание конфликтов"],
-            thinkingStyle: "Интуитивный, ориентированный на людей и контекст. Вы учитываете чувства и потребности других.",
-            stressReaction: "В стрессе вы стараетесь восстановить гармонию. Можете избегать конфликтов или брать на себя слишком много.",
-            scores: {
-                openness: "средняя",
-                conscientiousness: "средняя",
-                extraversion: "средняя",
-                agreeableness: "высокая",
-                neuroticism: "средняя"
-            }
+            color: "#ec4899",
+            description: "Вы чувствуете людей и ситуации на тонком уровне. Для вас важны отношения, гармония и взаимопонимание. Вы умеете сглаживать конфликты и находить подход к разным людям.",
+            tags: ["Миротворец", "Эмпат", "Коммуникатор"],
+            metrics: {
+                "Эмпатия": "96%",
+                "Гармония": "89%",
+                "Коммуникация": "82%"
+            },
+            insights: [
+                "Вы часто ставите потребности других выше своих",
+                "Вы чувствуете настроение в комнате, как только входите",
+                "Вам тяжело принимать жесткие решения, которые могут кого-то расстроить"
+            ]
         },
-        {
-            id: "stabilizer",
+        stabilizer: {
             name: "Стабилизатор-Опекун",
-            subtitle: "Надёжность, практичность, забота",
+            subtitle: "Надежность, забота, стабильность",
             icon: "fas fa-shield-alt",
-            color: "#4CAF50",
-            description: "Вы обеспечиваете стабильность и надёжность. Практичный и ответственный подход помогает вам создавать безопасную среду для себя и других.",
-            strengths: ["Надёжность", "Практичность", "Ответственность", "Заботливость"],
-            risks: ["Сопротивление изменениям", "Излишняя осторожность", "Трудности с принятием рисков", "Консерватизм"],
-            thinkingStyle: "Практичный, ориентированный на традиции и проверенные методы. Вы цените стабильность и предсказуемость.",
-            stressReaction: "В стрессе вы цепляетесь за знакомое и предсказуемое. Можете стать более контролирующими или тревожными.",
-            scores: {
-                openness: "низкая",
-                conscientiousness: "высокая",
-                extraversion: "низкая",
-                agreeableness: "высокая",
-                neuroticism: "средняя"
-            }
+            color: "#f59e0b",
+            description: "Вы — человек, на которого можно положиться. Вы создаете порядок, стабильность и безопасность вокруг себя. Практичность и ответственность — ваши сильные стороны.",
+            tags: ["Опекун", "Организатор", "Защитник"],
+            metrics: {
+                "Надежность": "94%",
+                "Забота": "87%",
+                "Стабильность": "91%"
+            },
+            insights: [
+                "Вы часто беспокоитесь о том, чтобы всё было под контролем",
+                "Люди instinctively тянутся к вам в трудные моменты",
+                "Вы не любите неожиданных изменений, предпочитая проверенные пути"
+            ]
         },
-        {
-            id: "pioneer",
-            name: "Пионер-Лидер",
-            subtitle: "Энергия, инициатива, влияние",
-            icon: "fas fa-fire",
-            color: "#f72585",
-            description: "Вы энергичны, уверены в себе и легко ведёте за собой других. Ваша инициативность и решительность помогают достигать целей.",
-            strengths: ["Инициативность", "Уверенность", "Лидерские качества", "Решительность"],
-            risks: ["Нетерпеливость", "Доминирование", "Импульсивность", "Недооценка рисков"],
-            thinkingStyle: "Активный, ориентированный на действия и результаты. Вы быстро переходите от идеи к реализации.",
-            stressReaction: "В стрессе вы пытаетесь взять ситуацию под контроль через активные действия. Можете стать авторитарными или нетерпеливыми.",
-            scores: {
-                openness: "средняя",
-                conscientiousness: "средняя",
-                extraversion: "высокая",
-                agreeableness: "низкая",
-                neuroticism: "низкая"
-            }
+        pioneer: {
+            name: "Пионер-Двигатель",
+            subtitle: "Энергия, действие, влияние",
+            icon: "fas fa-bolt",
+            color: "#06b6d4",
+            description: "Вы заряжаете энергией и ведете за собой. Решительность, инициатива и способность влиять на других — ваши ключевые качества. Вы не ждете возможностей, вы их создаете.",
+            tags: ["Лидер", "Энерджайзер", "Мотиватор"],
+            metrics: {
+                "Инициатива": "93%",
+                "Влияние": "88%",
+                "Решительность": "90%"
+            },
+            insights: [
+                "Вы иногда бываете нетерпеливы, когда другие не успевают за вашим темпом",
+                "Вам сложно делегировать — кажется, что вы сделаете всё лучше и быстрее",
+                "Вы превращаете любую ситуацию в возможность для роста"
+            ]
         }
-    ]
+    }
 };
 
-// Состояние приложения
+// СОСТОЯНИЕ ПРИЛОЖЕНИЯ
 let appState = {
     currentScreen: 'welcome',
     currentQuestion: 0,
-    answers: [],
-    selectedOption: null,
+    answers: {},
+    scores: {
+        analyst: 0,
+        explorer: 0,
+        diplomat: 0,
+        stabilizer: 0,
+        pioneer: 0
+    },
     resultProfile: null
 };
 
-// Элементы DOM
-const screens = {
-    welcome: document.getElementById('welcome-screen'),
-    test: document.getElementById('test-screen'),
-    result: document.getElementById('result-screen')
-};
-
+// DOM ЭЛЕМЕНТЫ
 const elements = {
+    // Кнопки
     startBtn: document.getElementById('start-btn'),
+    backBtn: document.getElementById('back-btn'),
+    shareImageBtn: document.getElementById('share-image-btn'),
+    shareTextBtn: document.getElementById('share-text-btn'),
+    restartBtn: document.getElementById('restart-btn'),
+    
+    // Экраны
+    screens: {
+        welcome: document.getElementById('welcome-screen'),
+        test: document.getElementById('test-screen'),
+        result: document.getElementById('result-screen')
+    },
+    
+    // Вопросы
     questionText: document.getElementById('question-text'),
     optionsContainer: document.getElementById('options-container'),
-    prevBtn: document.getElementById('prev-btn'),
-    nextBtn: document.getElementById('next-btn'),
-    progressFill: document.getElementById('progress-fill'),
-    progressText: document.getElementById('progress-text'),
-    resultCard: document.getElementById('result-card'),
-    shareBtn: document.getElementById('share-btn'),
-    restartBtn: document.getElementById('restart-btn'),
+    currentQuestionEl: document.getElementById('current-question'),
+    totalQuestionsEl: document.getElementById('total-questions'),
+    progressIndicator: document.getElementById('progress-indicator'),
+    
+    // Результаты
+    resultMainCard: document.getElementById('result-main-card'),
+    resultShape: document.getElementById('result-shape'),
+    metricsContainer: document.getElementById('metrics-container'),
+    insightsContainer: document.getElementById('insights-container'),
+    
+    // Уведомления
     notification: document.getElementById('notification'),
-    notificationText: document.getElementById('notification-text')
+    notificationText: document.getElementById('notification-text'),
+    
+    // Canvas
+    resultCanvas: document.getElementById('result-canvas')
 };
 
-// Инициализация приложения
+// ОТВЕТЫ ПОЛЬЗОВАТЕЛЯ (5-балльная шкала)
+const answerOptions = [
+    { text: "Совсем не про меня", value: 1 },
+    { text: "Скорее нет", value: 2 },
+    { text: "Затрудняюсь ответить", value: 3 },
+    { text: "Скорее да", value: 4 },
+    { text: "Это абсолютно про меня", value: 5 }
+];
+
+// ИНИЦИАЛИЗАЦИЯ
 function initApp() {
-    // Показываем экран приветствия
-    showScreen('welcome');
+    // Загружаем сохраненный прогресс
+    loadProgress();
     
-    // Инициализируем обработчики событий
-    elements.startBtn.addEventListener('click', startTest);
-    elements.prevBtn.addEventListener('click', prevQuestion);
-    elements.nextBtn.addEventListener('click', nextQuestion);
-    elements.shareBtn.addEventListener('click', shareResult);
-    elements.restartBtn.addEventListener('click', restartTest);
+    // Настройка экрана
+    showScreen(appState.currentScreen);
     
-    // Инициализируем тест
+    // Установка обработчиков событий
+    setupEventListeners();
+    
+    // Инициализация теста
     initTest();
 }
 
-// Показ экрана
+// ЗАГРУЗКА СОХРАНЕННОГО ПРОГРЕССА
+function loadProgress() {
+    const saved = localStorage.getItem('cognitiveCompassProgress');
+    if (saved) {
+        try {
+            const data = JSON.parse(saved);
+            if (data.currentQuestion > 0 || Object.keys(data.answers).length > 0) {
+                if (confirm('У вас есть незавершенный тест. Продолжить?')) {
+                    appState = data;
+                } else {
+                    localStorage.removeItem('cognitiveCompassProgress');
+                }
+            }
+        } catch (e) {
+            console.error('Ошибка загрузки прогресса:', e);
+        }
+    }
+}
+
+// СОХРАНЕНИЕ ПРОГРЕССА
+function saveProgress() {
+    localStorage.setItem('cognitiveCompassProgress', JSON.stringify(appState));
+}
+
+// НАСТРОЙКА ОБРАБОТЧИКОВ СОБЫТИЙ
+function setupEventListeners() {
+    elements.startBtn.addEventListener('click', () => {
+        showScreen('test');
+        saveProgress();
+    });
+    
+    elements.backBtn.addEventListener('click', () => {
+        if (appState.currentQuestion > 0) {
+            appState.currentQuestion--;
+            loadQuestion();
+            saveProgress();
+        } else {
+            showScreen('welcome');
+        }
+    });
+    
+    elements.shareImageBtn.addEventListener('click', shareAsImage);
+    elements.shareTextBtn.addEventListener('click', shareAsText);
+    elements.restartBtn.addEventListener('click', restartTest);
+}
+
+// ПОКАЗ ЭКРАНА
 function showScreen(screenName) {
-    // Скрываем все экраны
-    Object.values(screens).forEach(screen => {
+    Object.values(elements.screens).forEach(screen => {
         screen.classList.remove('active');
     });
     
-    // Показываем выбранный экран
-    screens[screenName].classList.add('active');
+    elements.screens[screenName].classList.add('active');
     appState.currentScreen = screenName;
+    
+    // Анимация появления
+    if (screenName === 'result' && appState.resultProfile) {
+        displayResult();
+        animateResult();
+    }
 }
 
-// Инициализация теста
+// ИНИЦИАЛИЗАЦИЯ ТЕСТА
 function initTest() {
-    appState.currentQuestion = 0;
-    appState.answers = [];
-    appState.selectedOption = null;
-    updateProgress();
+    elements.totalQuestionsEl.textContent = testData.questions.length;
     loadQuestion();
 }
 
-// Начало теста
-function startTest() {
-    showScreen('test');
-    initTest();
-}
-
-// Загрузка вопроса
+// ЗАГРУЗКА ВОПРОСА
 function loadQuestion() {
     const question = testData.questions[appState.currentQuestion];
     
     // Обновляем текст вопроса
     elements.questionText.textContent = question.text;
     
-    // Очищаем контейнер с вариантами ответов
+    // Обновляем прогресс
+    updateProgress();
+    
+    // Очищаем контейнер с вариантами
     elements.optionsContainer.innerHTML = '';
     
-    // Создаём варианты ответов
-    testData.options.forEach((option, index) => {
-        const optionElement = document.createElement('div');
-        optionElement.className = 'option';
+    // Создаем варианты ответов
+    answerOptions.forEach((option, index) => {
+        const optionBtn = document.createElement('button');
+        optionBtn.className = 'option-btn';
         
-        // Проверяем, выбран ли этот вариант
-        const isSelected = appState.answers[appState.currentQuestion] === option.value;
-        if (isSelected) {
-            optionElement.classList.add('selected');
-            appState.selectedOption = option.value;
+        // Проверяем, выбран ли этот вариант ранее
+        if (appState.answers[appState.currentQuestion] === option.value) {
+            optionBtn.classList.add('selected');
         }
         
-        optionElement.innerHTML = `
+        optionBtn.innerHTML = `
             <span class="option-number">${index + 1}</span>
             <span class="option-text">${option.text}</span>
         `;
         
-        // Обработчик выбора варианта
-        optionElement.addEventListener('click', () => selectOption(option.value, optionElement));
+        // Обработчик выбора
+        optionBtn.addEventListener('click', () => selectAnswer(option.value, optionBtn));
         
-        elements.optionsContainer.appendChild(optionElement);
+        elements.optionsContainer.appendChild(optionBtn);
     });
     
-    // Обновляем состояние кнопок
-    updateButtons();
-    updateProgress();
+    // Анимация появления вопроса
+    const questionCard = document.querySelector('.question-card');
+    questionCard.classList.remove('animate__fadeInRight');
+    void questionCard.offsetWidth; // Перезапуск анимации
+    questionCard.classList.add('animate__fadeInRight');
 }
 
-// Выбор варианта ответа
-function selectOption(value, element) {
+// ВЫБОР ОТВЕТА
+function selectAnswer(value, element) {
     // Снимаем выделение со всех вариантов
-    document.querySelectorAll('.option').forEach(opt => {
-        opt.classList.remove('selected');
+    document.querySelectorAll('.option-btn').forEach(btn => {
+        btn.classList.remove('selected');
     });
     
-    // Выделяем выбранный вариант
+    // Выделяем выбранный
     element.classList.add('selected');
     
     // Сохраняем ответ
     appState.answers[appState.currentQuestion] = value;
-    appState.selectedOption = value;
     
-    // Обновляем состояние кнопок
-    updateButtons();
+    // Автопереход к следующему вопросу через 0.5с
+    setTimeout(() => {
+        nextQuestion();
+    }, 500);
+    
+    saveProgress();
 }
 
-// Обновление состояния кнопок
-function updateButtons() {
-    // Кнопка "Назад"
-    elements.prevBtn.disabled = appState.currentQuestion === 0;
-    
-    // Кнопка "Далее"
-    const hasAnswer = appState.answers[appState.currentQuestion] !== undefined;
-    elements.nextBtn.disabled = !hasAnswer;
-    
-    // Текст кнопки "Далее"
-    if (appState.currentQuestion === testData.questions.length - 1) {
-        elements.nextBtn.innerHTML = 'Узнать результат <i class="fas fa-chart-bar"></i>';
-    } else {
-        elements.nextBtn.innerHTML = 'Далее <i class="fas fa-arrow-right"></i>';
-    }
-}
-
-// Обновление прогресс-бара
+// ОБНОВЛЕНИЕ ПРОГРЕССА
 function updateProgress() {
     const progress = ((appState.currentQuestion + 1) / testData.questions.length) * 100;
-    elements.progressFill.style.width = `${progress}%`;
-    elements.progressText.textContent = `Вопрос ${appState.currentQuestion + 1} из ${testData.questions.length}`;
+    elements.progressIndicator.style.width = `${progress}%`;
+    elements.currentQuestionEl.textContent = appState.currentQuestion + 1;
 }
 
-// Переход к предыдущему вопросу
-function prevQuestion() {
-    if (appState.currentQuestion > 0) {
-        appState.currentQuestion--;
-        appState.selectedOption = appState.answers[appState.currentQuestion];
-        loadQuestion();
-    }
-}
-
-// Переход к следующему вопросу
+// СЛЕДУЮЩИЙ ВОПРОС
 function nextQuestion() {
-    // Проверяем, есть ли ответ на текущий вопрос
+    // Проверяем, есть ли ответ
     if (appState.answers[appState.currentQuestion] === undefined) {
+        showNotification('Пожалуйста, выберите ответ');
         return;
     }
     
-    // Если это последний вопрос, показываем результат
+    // Если последний вопрос - показываем результат
     if (appState.currentQuestion === testData.questions.length - 1) {
         calculateResult();
         showScreen('result');
-        displayResult();
+        localStorage.removeItem('cognitiveCompassProgress');
         return;
     }
     
-    // Переходим к следующему вопросу
+    // Переход к следующему вопросу
     appState.currentQuestion++;
-    appState.selectedOption = appState.answers[appState.currentQuestion];
     loadQuestion();
+    saveProgress();
 }
 
-// Расчёт результата
+// РАСЧЕТ РЕЗУЛЬТАТА
 function calculateResult() {
-    // Считаем баллы по чертам личности (Big Five)[citation:1][citation:9]
-    const scores = {
-        openness: 0,
-        conscientiousness: 0,
-        extraversion: 0,
-        agreeableness: 0,
-        neuroticism: 0
+    // Сбрасываем баллы
+    appState.scores = {
+        analyst: 0,
+        explorer: 0,
+        diplomat: 0,
+        stabilizer: 0,
+        pioneer: 0
     };
     
-    // Обработка ответов
+    // Считаем баллы для каждого типа
     testData.questions.forEach((question, index) => {
-        const answer = appState.answers[index];
-        let value = answer;
+        const answerValue = appState.answers[index] || 3; // По умолчанию нейтральный ответ
         
-        // Обработка обратных вопросов
-        if (question.reverse) {
-            value = 6 - answer; // Инвертируем значение (5-балльная шкала)
-        }
+        // Преобразуем ответ в множитель от -1 до 1
+        const multiplier = (answerValue - 3) / 2;
         
-        // Добавляем баллы к соответствующей черте
-        scores[question.trait] += value;
+        // Добавляем баллы для каждого типа
+        Object.keys(question.typeWeights).forEach(type => {
+            appState.scores[type] += question.typeWeights[type] * multiplier;
+        });
     });
     
-    // Определяем доминирующие черты
-    const dominantTraits = Object.entries(scores)
-        .sort((a, b) => b[1] - a[1])
-        .slice(0, 2)
-        .map(item => item[0]);
+    // Находим тип с максимальным количеством баллов
+    let maxScore = -Infinity;
+    let resultType = 'analyst';
     
-    // Определяем профиль на основе доминирующих черт
-    let profileId = 'analyst'; // По умолчанию
+    Object.keys(appState.scores).forEach(type => {
+        if (appState.scores[type] > maxScore) {
+            maxScore = appState.scores[type];
+            resultType = type;
+        }
+    });
     
-    if (dominantTraits.includes('openness') && dominantTraits.includes('extraversion')) {
-        profileId = 'explorer';
-    } else if (dominantTraits.includes('agreeableness') && dominantTraits.includes('extraversion')) {
-        profileId = 'diplomat';
-    } else if (dominantTraits.includes('conscientiousness') && dominantTraits.includes('agreeableness')) {
-        profileId = 'stabilizer';
-    } else if (dominantTraits.includes('extraversion') && dominantTraits.includes('conscientiousness')) {
-        profileId = 'pioneer';
-    } else if (dominantTraits.includes('neuroticism') && dominantTraits.includes('conscientiousness')) {
-        profileId = 'stabilizer';
-    }
-    
-    // Находим профиль
-    appState.resultProfile = testData.profiles.find(p => p.id === profileId) || testData.profiles[0];
+    appState.resultProfile = testData.profiles[resultType];
 }
 
-// Отображение результата
+// ПОКАЗ РЕЗУЛЬТАТА
 function displayResult() {
     const profile = appState.resultProfile;
     
-    elements.resultCard.innerHTML = `
-        <div class="profile-title">
-            <div class="profile-icon" style="background: ${profile.color}">
+    // Заполняем основную карточку
+    elements.resultMainCard.innerHTML = `
+        <div class="profile-header">
+            <div class="profile-icon">
                 <i class="${profile.icon}"></i>
             </div>
-            <div>
-                <h2 class="profile-name">${profile.name}</h2>
-                <p class="profile-subtitle">${profile.subtitle}</p>
+            <div class="profile-title">
+                <h3>${profile.name}</h3>
+                <div class="profile-subtitle">${profile.subtitle}</div>
             </div>
         </div>
         
         <div class="profile-description">
-            <p>${profile.description}</p>
+            ${profile.description}
         </div>
         
-        <div class="profile-details">
-            <div class="detail-card">
-                <h4><i class="fas fa-star"></i> Сильные стороны</h4>
-                <ul>
-                    ${profile.strengths.map(strength => `<li>${strength}</li>`).join('')}
-                </ul>
-            </div>
-            
-            <div class="detail-card">
-                <h4><i class="fas fa-exclamation-triangle"></i> Скрытые риски</h4>
-                <ul>
-                    ${profile.risks.map(risk => `<li>${risk}</li>`).join('')}
-                </ul>
-            </div>
-            
-            <div class="detail-card">
-                <h4><i class="fas fa-brain"></i> Стиль мышления</h4>
-                <p>${profile.thinkingStyle}</p>
-            </div>
-            
-            <div class="detail-card">
-                <h4><i class="fas fa-fire"></i> В стрессовых ситуациях</h4>
-                <p>${profile.stressReaction}</p>
-            </div>
-        </div>
-        
-        <div class="profile-scores">
-            <h4><i class="fas fa-chart-bar"></i> Оценки по модели Big Five:</h4>
-            <p>Открытость: <strong>${profile.scores.openness}</strong>, 
-               Добросовестность: <strong>${profile.scores.conscientiousness}</strong>, 
-               Экстраверсия: <strong>${profile.scores.extraversion}</strong>, 
-               Доброжелательность: <strong>${profile.scores.agreeableness}</strong>, 
-               Нейротизм: <strong>${profile.scores.neuroticism}</strong></p>
+        <div class="profile-tags">
+            ${profile.tags.map(tag => `<span class="profile-tag">${tag}</span>`).join('')}
         </div>
     `;
+    
+    // Заполняем метрики
+    elements.metricsContainer.innerHTML = '';
+    Object.entries(profile.metrics).forEach(([label, value]) => {
+        const metricEl = document.createElement('div');
+        metricEl.className = 'metric';
+        metricEl.innerHTML = `
+            <div class="metric-value">${value}</div>
+            <div class="metric-label">${label}</div>
+        `;
+        elements.metricsContainer.appendChild(metricEl);
+    });
+    
+    // Заполняем инсайты
+    elements.insightsContainer.innerHTML = '';
+    profile.insights.forEach(insight => {
+        const insightEl = document.createElement('div');
+        insightEl.className = 'insight-item';
+        insightEl.innerHTML = `
+            <i class="fas fa-lightbulb"></i>
+            <div>${insight}</div>
+        `;
+        elements.insightsContainer.appendChild(insightEl);
+    });
+    
+    // Настраиваем форму результата
+    elements.resultShape.innerHTML = `<i class="${profile.icon}"></i>`;
+    elements.resultShape.style.background = `linear-gradient(135deg, ${profile.color}, ${profile.color}dd)`;
+    
+    // Анимация появления
+    elements.resultMainCard.classList.remove('animate__fadeInUp');
+    void elements.resultMainCard.offsetWidth;
+    elements.resultMainCard.classList.add('animate__fadeInUp');
 }
 
-// Поделиться результатом
-function shareResult() {
+// АНИМАЦИЯ РЕЗУЛЬТАТА
+function animateResult() {
+    const shape = elements.resultShape;
+    shape.classList.add('float-animation');
+    
+    // Создаем частицы
+    createParticles();
+}
+
+// СОЗДАНИЕ ЧАСТИЦ
+function createParticles() {
+    const particlesContainer = document.getElementById('particles');
+    if (!particlesContainer) return;
+    
+    particlesContainer.innerHTML = '';
+    
+    for (let i = 0; i < 30; i++) {
+        const particle = document.createElement('div');
+        particle.style.position = 'absolute';
+        particle.style.width = '4px';
+        particle.style.height = '4px';
+        particle.style.background = appState.resultProfile.color;
+        particle.style.borderRadius = '50%';
+        particle.style.left = `${Math.random() * 100}%`;
+        particle.style.top = `${Math.random() * 100}%`;
+        particle.style.opacity = '0.7';
+        particle.style.animation = `float ${3 + Math.random() * 4}s infinite ease-in-out`;
+        particle.style.animationDelay = `${Math.random() * 2}s`;
+        
+        particlesContainer.appendChild(particle);
+    }
+}
+
+// ПОДЕЛИТЬСЯ КАК ИЗОБРАЖЕНИЕ
+function shareAsImage() {
+    const card = elements.resultMainCard;
+    
+    // Временно меняем стили для скриншота
+    const originalStyles = {
+        margin: card.style.margin,
+        boxShadow: card.style.boxShadow,
+        transform: card.style.transform
+    };
+    
+    card.style.margin = '0 auto';
+    card.style.boxShadow = 'none';
+    card.style.transform = 'none';
+    
+    // Используем html2canvas для создания скриншота
+    html2canvas(card, {
+        backgroundColor: '#0f172a',
+        scale: 2,
+        useCORS: true
+    }).then(canvas => {
+        // Восстанавливаем стили
+        card.style.margin = originalStyles.margin;
+        card.style.boxShadow = originalStyles.boxShadow;
+        card.style.transform = originalStyles.transform;
+        
+        // Создаем ссылку для скачивания
+        const link = document.createElement('a');
+        link.download = `cognitive-compass-${appState.resultProfile.name}.png`;
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+        
+        showNotification('Карточка сохранена в галерею!');
+    }).catch(error => {
+        console.error('Ошибка создания изображения:', error);
+        showNotification('Не удалось создать карточку. Попробуйте другой способ.');
+        
+        // Восстанавливаем стили при ошибке
+        card.style.margin = originalStyles.margin;
+        card.style.boxShadow = originalStyles.boxShadow;
+        card.style.transform = originalStyles.transform;
+    });
+}
+
+// ПОДЕЛИТЬСЯ ТЕКСТОМ
+function shareAsText() {
     const profile = appState.resultProfile;
     
-    // Формируем текст для копирования
-    const shareText = `Мой когнитивный профиль: ${profile.name} - ${profile.subtitle}
+    const text = `🧠 Мой когнитивный профиль: ${profile.name}
 
 ${profile.description}
 
-Сильные стороны:
-${profile.strengths.map((s, i) => `${i+1}. ${s}`).join('\n')}
+${profile.tags.map(tag => `#${tag}`).join(' ')}
 
-Скрытые риски:
-${profile.risks.map((r, i) => `${i+1}. ${r}`).join('\n')}
+Пройди тест Cognitive Compass и узнай свой тип мышления!`;
 
-Стиль мышления: ${profile.thinkingStyle}
-
-В стрессовых ситуациях: ${profile.stressReaction}
-
-Определите свой когнитивный профиль: [ссылка на тест]
-
-#CognitiveCompass #Психология #BigFive`;
-
-    // Копируем текст в буфер обмена
-    navigator.clipboard.writeText(shareText)
-        .then(() => {
-            showNotification('Результат скопирован! Можете поделиться в Telegram или соцсетях');
-        })
-        .catch(err => {
-            console.error('Ошибка копирования: ', err);
-            showNotification('Не удалось скопировать. Попробуйте выделить текст вручную.');
-        });
+    navigator.clipboard.writeText(text).then(() => {
+        showNotification('Текст скопирован! Можешь поделиться в соцсетях');
+    }).catch(() => {
+        // Fallback для старых браузеров
+        const textArea = document.createElement('textarea');
+        textArea.value = text;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+        showNotification('Текст скопирован!');
+    });
 }
 
-// Показать уведомление
-function showNotification(text) {
-    elements.notificationText.textContent = text;
+// НАЧАТЬ ТЕСТ ЗАНОВО
+function restartTest() {
+    if (confirm('Начать тест заново?')) {
+        appState = {
+            currentScreen: 'welcome',
+            currentQuestion: 0,
+            answers: {},
+            scores: {
+                analyst: 0,
+                explorer: 0,
+                diplomat: 0,
+                stabilizer: 0,
+                pioneer: 0
+            },
+            resultProfile: null
+        };
+        
+        showScreen('welcome');
+        initTest();
+    }
+}
+
+// ПОКАЗАТЬ УВЕДОМЛЕНИЕ
+function showNotification(message) {
+    elements.notificationText.textContent = message;
     elements.notification.classList.add('show');
     
-    // Скрываем уведомление через 3 секунды
     setTimeout(() => {
         elements.notification.classList.remove('show');
     }, 3000);
 }
 
-// Начать тест заново
-function restartTest() {
-    showScreen('welcome');
-    initTest();
-}
-
-// Запуск приложения при загрузке страницы
+// ЗАПУСК ПРИ ЗАГРУЗКЕ СТРАНИЦЫ
 document.addEventListener('DOMContentLoaded', initApp);
