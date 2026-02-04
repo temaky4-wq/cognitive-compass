@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cognitive Compass | Тест когнитивного стиля</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Экран приветствия -->
+        <section id="welcome-screen" class="screen active">
+            <div class="logo">
+                <i class="fas fa-brain"></i>
+                <h1>Cognitive Compass</h1>
+            </div>
+            <div class="welcome-content">
+                <h2>Как ваш разум ориентируется в мире?</h2>
+                <p class="subtitle">Научный тест на основе модели Big Five и исследований когнитивных стилей[citation:1][citation:2]</p>
+                
+                <div class="features">
+                    <div class="feature">
+                        <i class="fas fa-flask"></i>
+                        <span>Научный подход</span>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-clock"></i>
+                        <span>3 минуты</span>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-chart-bar"></i>
+                        <span>5 профилей</span>
+                    </div>
+                </div>
+                
+                <div class="test-info">
+                    <p><strong>Узнайте свой когнитивный стиль:</strong></p>
+                    <ul>
+                        <li>Как вы принимаете решения</li>
+                        <li>Как реагируете на неопределённость</li>
+                        <li>Ваши сильные стороны и риски</li>
+                    </ul>
+                </div>
+                
+                <button id="start-btn" class="btn-primary">
+                    Начать тест <i class="fas fa-arrow-right"></i>
+                </button>
+                
+                <p class="disclaimer">Тест не заменяет профессиональную психологическую диагностику. Основан на научных моделях[citation:3][citation:9].</p>
+            </div>
+        </section>
+        
+        <!-- Экран теста -->
+        <section id="test-screen" class="screen">
+            <div class="header">
+                <div class="logo-small">
+                    <i class="fas fa-brain"></i>
+                    <span>Cognitive Compass</span>
+                </div>
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progress-fill"></div>
+                    </div>
+                    <span class="progress-text" id="progress-text">Вопрос 1 из 8</span>
+                </div>
+            </div>
+            
+            <div class="question-container">
+                <h2 id="question-text"></h2>
+                <div class="options-container" id="options-container">
+                    <!-- Варианты ответов генерируются динамически -->
+                </div>
+            </div>
+            
+            <div class="navigation">
+                <button id="prev-btn" class="btn-secondary" disabled>
+                    <i class="fas fa-arrow-left"></i> Назад
+                </button>
+                <button id="next-btn" class="btn-primary" disabled>
+                    Далее <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+        </section>
+        
+        <!-- Экран результатов -->
+        <section id="result-screen" class="screen">
+            <div class="result-header">
+                <h2>Ваш когнитивный профиль</h2>
+                <p class="subtitle">Основан на ваших ответах и модели Big Five[citation:1][citation:9]</p>
+            </div>
+            
+            <div class="result-card" id="result-card">
+                <!-- Карточка результата генерируется динамически -->
+            </div>
+            
+            <div class="result-actions">
+                <button id="share-btn" class="btn-share">
+                    <i class="fas fa-share-alt"></i> Поделиться результатом
+                </button>
+                <button id="restart-btn" class="btn-secondary">
+                    <i class="fas fa-redo"></i> Пройти ещё раз
+                </button>
+            </div>
+            
+            <div class="result-details">
+                <h3>О модели Cognitive Compass</h3>
+                <p>Эта типология основана на научных исследованиях когнитивных стилей и личности[citation:2][citation:9]. Она описывает, как люди воспринимают информацию, принимают решения и реагируют на неопределённость.</p>
+                
+                <div class="traits-explained">
+                    <div class="trait">
+                        <h4><i class="fas fa-lightbulb"></i> Открытость (Openness)</h4>
+                        <p>Склонность к новому опыту, любопытство, креативность</p>
+                    </div>
+                    <div class="trait">
+                        <h4><i class="fas fa-tasks"></i> Добросовестность (Conscientiousness)</h4>
+                        <p>Организованность, самодисциплина, стремление к достижениям</p>
+                    </div>
+                    <div class="trait">
+                        <h4><i class="fas fa-bullseye"></i> Толерантность к неопределённости</h4>
+                        <p>Комфорт в неясных ситуациях, гибкость мышления[citation:2]</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Уведомление -->
+        <div id="notification" class="notification">
+            <span id="notification-text">Текст скопирован!</span>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
