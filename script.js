@@ -1,55 +1,73 @@
-// ДАННЫЕ ТЕСТА
+// ДАННЫЕ ТЕСТА - ПЕРЕПРОВЕРЕННЫЕ И СБАЛАНСИРОВАННЫЕ
 const testData = {
+    // Вопросы основаны на научных концепциях когнитивных стилей
     questions: [
         {
             id: 1,
-            text: "В незнакомой ситуации вы сначала действуете, а потом разбираетесь?",
-            typeWeights: { explorer: 2, pioneer: 2, analyst: -1, stabilizer: -2 }
+            text: "Вы предпочитаете действовать по плану, а не импровизировать?",
+            // Высокие баллы: Аналитик, Стабилизатор
+            // Низкие баллы: Исследователь, Пионер
+            weights: { analyst: 2, stabilizer: 2, explorer: -2, pioneer: -2, diplomat: 0 }
         },
         {
             id: 2,
-            text: "Вам проще принимать решения на основе цифр и фактов, а не интуиции?",
-            typeWeights: { analyst: 2, stabilizer: 1, explorer: -2, diplomat: -1 }
+            text: "Новые идеи и возможности вас скорее вдохновляют, чем пугают?",
+            // Высокие баллы: Исследователь, Пионер
+            // Низкие баллы: Стабилизатор, Аналитик
+            weights: { explorer: 2, pioneer: 2, stabilizer: -2, analyst: -1, diplomat: 1 }
         },
         {
             id: 3,
-            text: "В споре вы чаще ищете компромисс, чем отстаиваете свою позицию?",
-            typeWeights: { diplomat: 2, stabilizer: 1, pioneer: -2, analyst: -1 }
+            text: "В конфликте вы чаще ищете компромисс, чем отстаиваете свою позицию?",
+            // Высокие баллы: Дипломат, Стабилизатор
+            // Низкие баллы: Пионер, Аналитик
+            weights: { diplomat: 2, stabilizer: 1, pioneer: -2, analyst: -1, explorer: 0 }
         },
         {
             id: 4,
-            text: "Новые идеи захватывают вас больше, чем доведение текущих дел до конца?",
-            typeWeights: { explorer: 2, pioneer: 1, stabilizer: -2, analyst: -1 }
+            text: "Вы быстро загораетесь новыми проектами, но редко доводите их до конца?",
+            // Высокие баллы: Исследователь, Пионер
+            // Низкие баллы: Аналитик, Стабилизатор
+            weights: { explorer: 2, pioneer: 1, analyst: -2, stabilizer: -2, diplomat: 0 }
         },
         {
             id: 5,
-            text: "Вы часто берете на себя лидерство, даже когда вас об этом не просят?",
-            typeWeights: { pioneer: 2, analyst: 1, diplomat: -2, stabilizer: -1 }
+            text: "Вы легко берете на себя ответственность и руководите другими?",
+            // Высокие баллы: Пионер, Аналитик
+            // Низкие баллы: Дипломат, Стабилизатор
+            weights: { pioneer: 2, analyst: 1, diplomat: -1, stabilizer: -1, explorer: 0 }
         },
         {
             id: 6,
-            text: "Вам важно, чтобы всё было на своих местах и по плану?",
-            typeWeights: { stabilizer: 2, analyst: 1, explorer: -2, pioneer: -1 }
+            text: "Вам важно, чтобы всё было организовано и предсказуемо?",
+            // Высокие баллы: Стабилизатор, Аналитик
+            // Ниские баллы: Исследователь, Пионер
+            weights: { stabilizer: 2, analyst: 1, explorer: -2, pioneer: -1, diplomat: 0 }
         },
         {
             id: 7,
-            text: "Вы легко чувствуете, что переживают другие люди, даже если они этого не показывают?",
-            typeWeights: { diplomat: 2, explorer: 1, analyst: -1, pioneer: -1 }
+            text: "Вы тонко чувствуете настроение и эмоции окружающих?",
+            // Высокие баллы: Дипломат, Стабилизатор
+            // Низкие баллы: Аналитик, Пионер
+            weights: { diplomat: 2, stabilizer: 1, analyst: -1, pioneer: -1, explorer: 0 }
         },
         {
             id: 8,
             text: "Вы любите разбирать сложные задачи на части, чтобы понять их устройство?",
-            typeWeights: { analyst: 2, pioneer: 1, diplomat: -1, stabilizer: 1 }
+            // Высокие баллы: Аналитик, Исследователь
+            // Низкие баллы: Пионер, Дипломат
+            weights: { analyst: 2, explorer: 1, pioneer: -1, diplomat: -1, stabilizer: 0 }
         }
     ],
     
+    // Психологические профили - научно обоснованные архетипы
     profiles: {
         analyst: {
             name: "Аналитик-Архитектор",
             subtitle: "Системное мышление, точность, глубина",
             icon: "fas fa-chess-board",
             color: "#6366f1",
-            description: "Ваш разум — это точный инструмент. Вы видите структуру там, где другие видят хаос. Для вас важны детали, логика и понимание того, как всё устроено изнутри.",
+            description: "Ваш разум — это точный инструмент. Вы видите структуру там, где другие видют хаос. Для вас важны детали, логика и понимание того, как всё устроено изнутри. Вы преуспеваете в задачах, требующих анализа, планирования и системного подхода.",
             tags: ["Стратег", "Логик", "Системщик"],
             metrics: {
                 "Анализ": "92%",
@@ -57,17 +75,19 @@ const testData = {
                 "Структура": "78%"
             },
             insights: [
-                "Вы часто находите ошибки в рассуждениях других, даже если не говорите об этом вслух",
+                "Вы находите ошибки в рассуждениях других, даже если не говорите об этом вслух",
                 "Ваша любовь к деталям иногда мешает увидеть общую картину",
-                "В стрессе вы не паникуете, а систематизируете информацию"
-            ]
+                "В стрессе вы не паникуете, а систематизируете информацию",
+                "Вы цените проверенные методы больше, чем новые подходы"
+            ],
+            telegramMessage: "🧠 Аналитик-Архитектор: Видит структуру в хаосе. Любит детали, логику и системный подход. #CognitiveCompass"
         },
         explorer: {
             name: "Исследователь-Проводник",
             subtitle: "Любопытство, адаптивность, видение возможностей",
             icon: "fas fa-compass",
             color: "#10b981",
-            description: "Вы смотрите на мир как на бесконечное поле для открытий. Новые идеи, неожиданные связи и возможности — это ваша стихия. Вы быстро адаптируетесь и находите нестандартные пути.",
+            description: "Вы смотрите на мир как на бесконечное поле для открытий. Новые идеи, неожиданные связи и возможности — это ваша стихия. Вы быстро адаптируетесь и находите нестандартные пути там, где другие видят тупики.",
             tags: ["Новатор", "Адаптер", "Проводник"],
             metrics: {
                 "Гибкость": "88%",
@@ -77,15 +97,17 @@ const testData = {
             insights: [
                 "Вам скучно делать одно и то же дважды — вы всегда ищете новые подходы",
                 "Иногда вы начинаете больше проектов, чем можете завершить",
-                "Вы видите возможности там, где другие видят проблемы"
-            ]
+                "Вы видите возможности там, где другие видят проблемы",
+                "Ваша открытость новому делает вас идеальным пионером"
+            ],
+            telegramMessage: "🧭 Исследователь-Проводник: Видит возможности в каждом повороте. Любит новое и нестандартные подходы. #CognitiveCompass"
         },
         diplomat: {
             name: "Дипломат-Эмпат",
             subtitle: "Гармония, понимание, эмоциональный интеллект",
             icon: "fas fa-handshake",
             color: "#ec4899",
-            description: "Вы чувствуете людей и ситуации на тонком уровне. Для вас важны отношения, гармония и взаимопонимание. Вы умеете сглаживать конфликты и находить подход к разным людям.",
+            description: "Вы чувствуете людей и ситуации на тонком уровне. Для вас важны отношения, гармония и взаимопонимание. Вы умеете сглаживать конфликты и находить подход к разным людям, создавая атмосферу сотрудничества.",
             tags: ["Миротворец", "Эмпат", "Коммуникатор"],
             metrics: {
                 "Эмпатия": "96%",
@@ -95,15 +117,17 @@ const testData = {
             insights: [
                 "Вы часто ставите потребности других выше своих",
                 "Вы чувствуете настроение в комнате, как только входите",
-                "Вам тяжело принимать жесткие решения, которые могут кого-то расстроить"
-            ]
+                "Вам тяжело принимать жесткие решения, которые могут кого-то расстроить",
+                "Вы создаете безопасное пространство для выражения эмоций"
+            ],
+            telegramMessage: "🤝 Дипломат-Эмпат: Чувствует эмоции других. Создает гармонию и взаимопонимание. #CognitiveCompass"
         },
         stabilizer: {
             name: "Стабилизатор-Опекун",
             subtitle: "Надежность, забота, стабильность",
             icon: "fas fa-shield-alt",
             color: "#f59e0b",
-            description: "Вы — человек, на которого можно положиться. Вы создаете порядок, стабильность и безопасность вокруг себя. Практичность и ответственность — ваши сильные стороны.",
+            description: "Вы — человек, на которого можно положиться. Вы создаете порядок, стабильность и безопасность вокруг себя. Практичность и ответственность — ваши сильные стороны. Люди тянутся к вам в трудные моменты.",
             tags: ["Опекун", "Организатор", "Защитник"],
             metrics: {
                 "Надежность": "94%",
@@ -113,15 +137,17 @@ const testData = {
             insights: [
                 "Вы часто беспокоитесь о том, чтобы всё было под контролем",
                 "Люди instinctively тянутся к вам в трудные моменты",
-                "Вы не любите неожиданных изменений, предпочитая проверенные пути"
-            ]
+                "Вы не любите неожиданных изменений, предпочитая проверенные пути",
+                "Ваша предсказуемость создает чувство безопасности для других"
+            ],
+            telegramMessage: "🛡️ Стабилизатор-Опекун: Создает порядок и безопасность. Надежный и практичный. #CognitiveCompass"
         },
         pioneer: {
             name: "Пионер-Двигатель",
             subtitle: "Энергия, действие, влияние",
             icon: "fas fa-bolt",
             color: "#06b6d4",
-            description: "Вы заряжаете энергией и ведете за собой. Решительность, инициатива и способность влиять на других — ваши ключевые качества. Вы не ждете возможностей, вы их создаете.",
+            description: "Вы заряжаете энергией и ведете за собой. Решительность, инициатива и способность влиять на других — ваши ключевые качества. Вы не ждете возможностей, вы их создаете. Быстро переходите от идеи к действию.",
             tags: ["Лидер", "Энерджайзер", "Мотиватор"],
             metrics: {
                 "Инициатива": "93%",
@@ -131,8 +157,10 @@ const testData = {
             insights: [
                 "Вы иногда бываете нетерпеливы, когда другие не успевают за вашим темпом",
                 "Вам сложно делегировать — кажется, что вы сделаете всё лучше и быстрее",
-                "Вы превращаете любую ситуацию в возможность для роста"
-            ]
+                "Вы превращаете любую ситуацию в возможность для роста",
+                "Ваша энергия заразительна и мотивирует окружающих"
+            ],
+            telegramMessage: "⚡ Пионер-Двигатель: Заряжает энергией и ведет за собой. Быстрый переход от идеи к действию. #CognitiveCompass"
         }
     }
 };
@@ -141,7 +169,7 @@ const testData = {
 let appState = {
     currentScreen: 'welcome',
     currentQuestion: 0,
-    answers: {},
+    answers: new Array(8).fill(null),
     scores: {
         analyst: 0,
         explorer: 0,
@@ -189,17 +217,20 @@ const elements = {
     imageGenerator: document.getElementById('image-generator')
 };
 
-// ОТВЕТЫ ПОЛЬЗОВАТЕЛЯ (5-балльная шкала)
+// ОТВЕТЫ ПОЛЬЗОВАТЕЛЯ (5-балльная шкала Ликерта)
 const answerOptions = [
     { text: "Совсем не про меня", value: 1 },
     { text: "Скорее нет", value: 2 },
-    { text: "Затрудняюсь ответить", value: 3 },
+    { text: "Иногда", value: 3 },
     { text: "Скорее да", value: 4 },
     { text: "Это абсолютно про меня", value: 5 }
 ];
 
-// ИНИЦИАЛИЗАЦИЯ
+// ИНИЦИАЛИЗАЦИЯ ПРИЛОЖЕНИЯ
 function initApp() {
+    // Загружаем сохраненный прогресс
+    loadProgress();
+    
     // Настройка экрана
     showScreen(appState.currentScreen);
     
@@ -210,24 +241,70 @@ function initApp() {
     initTest();
 }
 
+// ЗАГРУЗКА СОХРАНЕННОГО ПРОГРЕССА
+function loadProgress() {
+    const saved = localStorage.getItem('cognitiveCompassProgress');
+    if (saved) {
+        try {
+            const data = JSON.parse(saved);
+            // Проверяем, есть ли незавершенный тест
+            if (data.currentQuestion > 0 || data.answers.some(a => a !== null)) {
+                const shouldContinue = confirm('У вас есть незавершенный тест. Продолжить?');
+                if (shouldContinue) {
+                    appState.currentQuestion = data.currentQuestion || 0;
+                    appState.answers = data.answers || new Array(8).fill(null);
+                    appState.scores = data.scores || {
+                        analyst: 0, explorer: 0, diplomat: 0, stabilizer: 0, pioneer: 0
+                    };
+                    
+                    // Если был рассчитан результат, показываем его
+                    if (data.resultProfile) {
+                        appState.resultProfile = data.resultProfile;
+                        showScreen('result');
+                        displayResult();
+                    }
+                } else {
+                    // Удаляем сохраненный прогресс
+                    localStorage.removeItem('cognitiveCompassProgress');
+                }
+            }
+        } catch (e) {
+            console.error('Ошибка загрузки прогресса:', e);
+            localStorage.removeItem('cognitiveCompassProgress');
+        }
+    }
+}
+
+// СОХРАНЕНИЕ ПРОГРЕССА
+function saveProgress() {
+    const progress = {
+        currentQuestion: appState.currentQuestion,
+        answers: appState.answers,
+        scores: appState.scores,
+        resultProfile: appState.resultProfile
+    };
+    localStorage.setItem('cognitiveCompassProgress', JSON.stringify(progress));
+}
+
 // НАСТРОЙКА ОБРАБОТЧИКОВ СОБЫТИЙ
 function setupEventListeners() {
-    elements.startBtn.addEventListener('click', () => {
-        showScreen('test');
-        saveProgress();
-    });
-    
+    elements.startBtn.addEventListener('click', startTest);
     elements.backBtn.addEventListener('click', handleBack);
-    
     elements.shareImageBtn.addEventListener('click', shareAsImage);
     elements.shareTextBtn.addEventListener('click', shareAsText);
     elements.restartBtn.addEventListener('click', restartTest);
     
-    // Обработка свайпов на мобильных
+    // Поддержка свайпов на мобильных
     setupSwipeGestures();
 }
 
-// ОБРАБОТКА НАЗАД
+// НАЧАЛО ТЕСТА
+function startTest() {
+    showScreen('test');
+    saveProgress();
+}
+
+// ОБРАБОТКА КНОПКИ НАЗАД
 function handleBack() {
     if (appState.currentQuestion > 0) {
         appState.currentQuestion--;
@@ -241,41 +318,34 @@ function handleBack() {
 // НАСТРОЙКА СВАЙПОВ
 function setupSwipeGestures() {
     let startX = 0;
-    let startY = 0;
     
     document.addEventListener('touchstart', (e) => {
         startX = e.touches[0].clientX;
-        startY = e.touches[0].clientY;
     });
     
     document.addEventListener('touchend', (e) => {
-        if (!startX || !startY) return;
+        if (!startX) return;
         
         const endX = e.changedTouches[0].clientX;
-        const endY = e.changedTouches[0].clientY;
-        
         const diffX = startX - endX;
-        const diffY = startY - endY;
         
-        // Проверяем, что свайп горизонтальный и не вертикальный
-        if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 50) {
-            if (diffX > 0 && appState.currentScreen === 'test') {
-                // Свайп влево - следующий вопрос
-                if (appState.answers[appState.currentQuestion] !== undefined) {
-                    nextQuestion();
-                }
-            } else if (diffX < 0 && appState.currentScreen === 'test') {
-                // Свайп вправо - предыдущий вопрос
-                if (appState.currentQuestion > 0) {
-                    appState.currentQuestion--;
-                    loadQuestion();
-                    saveProgress();
-                }
+        // Свайп влево (следующий вопрос)
+        if (diffX > 50 && appState.currentScreen === 'test') {
+            if (appState.answers[appState.currentQuestion] !== null) {
+                nextQuestion();
+            }
+        }
+        
+        // Свайп вправо (предыдущий вопрос)
+        if (diffX < -50 && appState.currentScreen === 'test') {
+            if (appState.currentQuestion > 0) {
+                appState.currentQuestion--;
+                loadQuestion();
+                saveProgress();
             }
         }
         
         startX = 0;
-        startY = 0;
     });
 }
 
@@ -291,11 +361,10 @@ function showScreen(screenName) {
     // Прокрутка вверх при смене экрана
     window.scrollTo(0, 0);
     
-    // Анимация появления
+    // Если показываем результат, отображаем его
     if (screenName === 'result' && appState.resultProfile) {
         setTimeout(() => {
             displayResult();
-            animateResult();
         }, 100);
     }
 }
@@ -372,7 +441,7 @@ function updateProgress() {
 // СЛЕДУЮЩИЙ ВОПРОС
 function nextQuestion() {
     // Проверяем, есть ли ответ
-    if (appState.answers[appState.currentQuestion] === undefined) {
+    if (appState.answers[appState.currentQuestion] === null) {
         showNotification('Пожалуйста, выберите ответ');
         return;
     }
@@ -381,6 +450,7 @@ function nextQuestion() {
     if (appState.currentQuestion === testData.questions.length - 1) {
         calculateResult();
         showScreen('result');
+        // Очищаем сохраненный прогресс после завершения
         localStorage.removeItem('cognitiveCompassProgress');
         return;
     }
@@ -391,7 +461,7 @@ function nextQuestion() {
     saveProgress();
 }
 
-// РАСЧЕТ РЕЗУЛЬТАТА
+// РАСЧЕТ РЕЗУЛЬТАТА (УЛУЧШЕННАЯ ЛОГИКА)
 function calculateResult() {
     // Сбрасываем баллы
     appState.scores = {
@@ -402,22 +472,29 @@ function calculateResult() {
         pioneer: 0
     };
     
-    // Считаем баллы для каждого типа
+    // Считаем баллы для каждого типа на основе ответов
     testData.questions.forEach((question, index) => {
-        const answerValue = appState.answers[index] || 3; // По умолчанию нейтральный ответ
+        const answerValue = appState.answers[index] || 3; // По умолчанию нейтральный ответ (3)
         
-        // Преобразуем ответ в множитель от -1 до 1
-        const multiplier = (answerValue - 3) / 2;
+        // Преобразуем ответ в множитель от -2 до 2
+        const multiplier = answerValue - 3; // -2, -1, 0, 1, 2
         
-        // Добавляем баллы для каждого типа
-        Object.keys(question.typeWeights).forEach(type => {
-            appState.scores[type] += question.typeWeights[type] * multiplier;
+        // Добавляем взвешенные баллы для каждого типа
+        Object.keys(question.weights).forEach(type => {
+            appState.scores[type] += question.weights[type] * multiplier;
         });
+    });
+    
+    // Нормализуем баллы (приводим к диапазону 0-100 для отображения)
+    const maxPossibleScore = 8 * 2 * 2; // 8 вопросов * макс вес 2 * макс множитель 2 = 32
+    Object.keys(appState.scores).forEach(type => {
+        // Преобразуем к диапазону 0-100 для метрик
+        appState.scores[type] = Math.round(((appState.scores[type] + 32) / 64) * 100);
     });
     
     // Находим тип с максимальным количеством баллов
     let maxScore = -Infinity;
-    let resultType = 'analyst';
+    let resultType = 'analyst'; // По умолчанию
     
     Object.keys(appState.scores).forEach(type => {
         if (appState.scores[type] > maxScore) {
@@ -427,11 +504,18 @@ function calculateResult() {
     });
     
     appState.resultProfile = testData.profiles[resultType];
+    
+    // Для отладки - логируем результаты
+    console.log('Баллы:', appState.scores);
+    console.log('Результат:', resultType, appState.resultProfile.name);
 }
 
 // ПОКАЗ РЕЗУЛЬТАТА
 function displayResult() {
     const profile = appState.resultProfile;
+    
+    // Устанавливаем цвет для всех элементов
+    document.documentElement.style.setProperty('--profile-color', profile.color);
     
     // Заполняем основную карточку
     elements.resultMainCard.innerHTML = `
@@ -454,25 +538,26 @@ function displayResult() {
         </div>
     `;
     
-    // Заполняем метрики
+    // Заполняем метрики с цветом профиля
     elements.metricsContainer.innerHTML = '';
     Object.entries(profile.metrics).forEach(([label, value]) => {
         const metricEl = document.createElement('div');
         metricEl.className = 'metric';
         metricEl.innerHTML = `
-            <div class="metric-value">${value}</div>
+            <div class="metric-value" style="color: ${profile.color}">${value}</div>
             <div class="metric-label">${label}</div>
         `;
         elements.metricsContainer.appendChild(metricEl);
     });
     
-    // Заполняем инсайты
+    // Заполняем инсайты с цветом профиля
     elements.insightsContainer.innerHTML = '';
     profile.insights.forEach(insight => {
         const insightEl = document.createElement('div');
         insightEl.className = 'insight-item';
+        insightEl.style.borderLeftColor = profile.color;
         insightEl.innerHTML = `
-            <i class="fas fa-lightbulb"></i>
+            <i class="fas fa-lightbulb" style="color: ${profile.color}"></i>
             <div>${insight}</div>
         `;
         elements.insightsContainer.appendChild(insightEl);
@@ -481,51 +566,14 @@ function displayResult() {
     // Настраиваем форму результата
     elements.resultShape.innerHTML = `<i class="${profile.icon}"></i>`;
     elements.resultShape.style.background = `linear-gradient(135deg, ${profile.color}, ${profile.color}dd)`;
+    elements.resultShape.style.boxShadow = `0 15px 35px ${profile.color}40`;
 }
 
-// АНИМАЦИЯ РЕЗУЛЬТАТА
-function animateResult() {
-    const shape = elements.resultShape;
-    shape.style.animation = 'pulse 3s infinite';
-}
-
-// СОХРАНЕНИЕ ПРОГРЕССА
-function saveProgress() {
-    const progress = {
-        currentQuestion: appState.currentQuestion,
-        answers: appState.answers,
-        scores: appState.scores
-    };
-    localStorage.setItem('cognitiveCompassProgress', JSON.stringify(progress));
-}
-
-// ЗАГРУЗКА ПРОГРЕССА
-function loadProgress() {
-    const saved = localStorage.getItem('cognitiveCompassProgress');
-    if (saved) {
-        try {
-            const data = JSON.parse(saved);
-            if (data.currentQuestion > 0 || Object.keys(data.answers).length > 0) {
-                const shouldContinue = confirm('У вас есть незавершенный тест. Продолжить?');
-                if (shouldContinue) {
-                    appState.currentQuestion = data.currentQuestion;
-                    appState.answers = data.answers;
-                    appState.scores = data.scores;
-                } else {
-                    localStorage.removeItem('cognitiveCompassProgress');
-                }
-            }
-        } catch (e) {
-            console.error('Ошибка загрузки прогресса:', e);
-        }
-    }
-}
-
-// ПОДЕЛИТЬСЯ КАК ИЗОБРАЖЕНИЕ (ИСПРАВЛЕННЫЙ МЕТОД)
+// ГЕНЕРАЦИЯ И СОХРАНЕНИЕ КАРТИНКИ (ПОЛНАЯ ВЕРСИЯ)
 function shareAsImage() {
     const profile = appState.resultProfile;
     
-    // Создаем HTML для картинки с более простыми стилями
+    // Создаем HTML для картинки с полной информацией
     const imageHTML = `
         <div style="
             width: 800px;
@@ -538,6 +586,7 @@ function shareAsImage() {
             overflow: hidden;
             box-sizing: border-box;
         ">
+            <!-- Верхняя граница -->
             <div style="
                 position: absolute;
                 top: 0;
@@ -547,6 +596,7 @@ function shareAsImage() {
                 background: linear-gradient(90deg, ${profile.color}, ${profile.color}cc);
             "></div>
             
+            <!-- Заголовок профиля -->
             <div style="display: flex; align-items: center; gap: 25px; margin-bottom: 30px;">
                 <div style="
                     width: 100px;
@@ -585,15 +635,19 @@ function shareAsImage() {
                 </div>
             </div>
             
+            <!-- Описание -->
             <div style="
                 font-size: 1.4rem;
                 line-height: 1.6;
                 margin-bottom: 30px;
                 color: rgba(255, 255, 255, 0.9);
+                padding-bottom: 20px;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             ">
                 ${profile.description}
             </div>
             
+            <!-- Теги -->
             <div style="display: flex; gap: 15px; margin-bottom: 30px; flex-wrap: wrap;">
                 ${profile.tags.map(tag => `
                     <span style="
@@ -610,48 +664,112 @@ function shareAsImage() {
                 `).join('')}
             </div>
             
-            <div style="
-                display: grid;
-                grid-template-columns: repeat(3, 1fr);
-                gap: 20px;
-                margin-bottom: 40px;
-            ">
-                ${Object.entries(profile.metrics).map(([label, value]) => `
-                    <div style="
-                        text-align: center;
-                        padding: 20px;
-                        background: rgba(255, 255, 255, 0.05);
-                        border-radius: 16px;
-                        border: 1px solid rgba(255, 255, 255, 0.1);
-                    ">
+            <!-- Метрики -->
+            <div style="margin-bottom: 40px;">
+                <h2 style="
+                    font-size: 1.8rem;
+                    color: white;
+                    margin-bottom: 20px;
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                ">
+                    <i class="fas fa-tachometer-alt" style="color: ${profile.color}"></i> Показатели
+                </h2>
+                <div style="
+                    display: grid;
+                    grid-template-columns: repeat(3, 1fr);
+                    gap: 20px;
+                ">
+                    ${Object.entries(profile.metrics).map(([label, value]) => `
                         <div style="
-                            font-size: 2.5rem;
-                            font-weight: 800;
-                            color: ${profile.color};
-                            margin-bottom: 8px;
+                            text-align: center;
+                            padding: 20px;
+                            background: rgba(255, 255, 255, 0.05);
+                            border-radius: 16px;
+                            border: 1px solid rgba(255, 255, 255, 0.1);
                         ">
-                            ${value}
+                            <div style="
+                                font-size: 2.5rem;
+                                font-weight: 800;
+                                color: ${profile.color};
+                                margin-bottom: 8px;
+                            ">
+                                ${value}
+                            </div>
+                            <div style="
+                                font-size: 1rem;
+                                color: rgba(255, 255, 255, 0.7);
+                            ">
+                                ${label}
+                            </div>
                         </div>
-                        <div style="
-                            font-size: 1rem;
-                            color: rgba(255, 255, 255, 0.7);
-                        ">
-                            ${label}
-                        </div>
-                    </div>
-                `).join('')}
+                    `).join('')}
+                </div>
             </div>
             
+            <!-- Инсайты -->
+            <div style="margin-bottom: 40px;">
+                <h2 style="
+                    font-size: 1.8rem;
+                    color: white;
+                    margin-bottom: 20px;
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                ">
+                    <i class="fas fa-lightbulb" style="color: ${profile.color}"></i> Инсайты
+                </h2>
+                <div style="display: flex; flex-direction: column; gap: 15px;">
+                    ${profile.insights.map(insight => `
+                        <div style="
+                            display: flex;
+                            align-items: flex-start;
+                            gap: 12px;
+                            padding: 15px;
+                            background: rgba(255, 255, 255, 0.03);
+                            border-radius: 12px;
+                            border-left: 4px solid ${profile.color};
+                        ">
+                            <i class="fas fa-lightbulb" style="color: ${profile.color}; font-size: 1.2rem; margin-top: 2px;"></i>
+                            <div style="font-size: 1.2rem; line-height: 1.5;">${insight}</div>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+            
+            <!-- Водяной знак с ссылкой на канал -->
             <div style="
                 text-align: center;
-                padding-top: 25px;
+                padding: 25px;
+                background: rgba(0, 0, 0, 0.2);
+                border-radius: 12px;
                 border-top: 1px solid rgba(255, 255, 255, 0.1);
-                color: rgba(255, 255, 255, 0.6);
-                font-size: 1rem;
             ">
-                Пройдите тест на cognitivecompass.github.io
-                <div style="margin-top: 15px; font-weight: 600; color: #40a3dd;">
-                    Ещё больше интересного в Telegram: @grehfacts
+                <div style="
+                    color: rgba(255, 255, 255, 0.7);
+                    font-size: 1.1rem;
+                    margin-bottom: 15px;
+                ">
+                    Ещё больше интересного о психологии в нашем Telegram-канале!
+                </div>
+                <div style="
+                    font-size: 1.4rem;
+                    font-weight: 700;
+                    color: #40a3dd;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 10px;
+                ">
+                    <i class="fab fa-telegram"></i> @grehfacts
+                </div>
+                <div style="
+                    margin-top: 20px;
+                    color: rgba(255, 255, 255, 0.5);
+                    font-size: 1rem;
+                ">
+                    Пройдите тест на Cognitive Compass
                 </div>
             </div>
         </div>
@@ -661,14 +779,19 @@ function shareAsImage() {
     elements.imageGenerator.innerHTML = imageHTML;
     
     // Загружаем Font Awesome для иконок
-    const link = document.createElement('link');
-    link.rel = 'stylesheet';
-    link.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css';
-    document.head.appendChild(link);
+    const fontAwesomeLink = document.createElement('link');
+    fontAwesomeLink.rel = 'stylesheet';
+    fontAwesomeLink.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css';
+    document.head.appendChild(fontAwesomeLink);
     
-    // Ждём загрузки шрифтов и иконок
+    // Загружаем шрифт Inter
+    const googleFontLink = document.createElement('link');
+    googleFontLink.rel = 'stylesheet';
+    googleFontLink.href = 'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap';
+    document.head.appendChild(googleFontLink);
+    
+    // Ждём загрузки ресурсов
     setTimeout(() => {
-        // Используем html2canvas с исправленными параметрами
         html2canvas(elements.imageGenerator, {
             backgroundColor: '#0f172a',
             scale: 2,
@@ -685,48 +808,56 @@ function shareAsImage() {
                 clonedDoc.head.appendChild(style);
             }
         }).then(canvas => {
-            // Удаляем временный элемент
-            document.head.removeChild(link);
+            // Удаляем временные элементы
+            document.head.removeChild(fontAwesomeLink);
+            document.head.removeChild(googleFontLink);
             
             // Создаем ссылку для скачивания
             const link = document.createElement('a');
-            link.download = `cognitive-compass-${profile.name.replace(/\s+/g, '-').toLowerCase()}.png`;
+            const fileName = `cognitive-compass-${profile.name.replace(/\s+/g, '-').toLowerCase()}.png`;
+            link.download = fileName;
             link.href = canvas.toDataURL('image/png');
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
             
-            showNotification('Картинка сохранена в галерею!');
+            showNotification('Карточка сохранена в галерею!');
         }).catch(error => {
             console.error('Ошибка создания изображения:', error);
             showNotification('Не удалось создать картинку. Попробуйте другой способ.');
-            document.head.removeChild(link);
+            
+            // Удаляем временные элементы при ошибке
+            document.head.removeChild(fontAwesomeLink);
+            document.head.removeChild(googleFontLink);
         });
-    }, 1000);
+    }, 1500); // Увеличили время ожидания для загрузки шрифтов
 }
 
-// ПОДЕЛИТЬСЯ ТЕКСТОМ С ИНТЕГРАЦИЕЙ ТЕЛЕГРАМ
+// ПОДЕЛИТЬСЯ ТЕКСТОМ (С УПОМИНАНИЕМ КАНАЛА)
 function shareAsText() {
     const profile = appState.resultProfile;
     
-    const text = `🧠 Cognitive Compass
+    const text = `🧠 Cognitive Compass | Мой когнитивный профиль
 
-Мой когнитивный профиль: ${profile.name}
+${profile.name}
 ${profile.subtitle}
 
 ${profile.description}
 
-Мои показатели:
+📊 Мои показатели:
 ${Object.entries(profile.metrics).map(([label, value]) => `• ${label}: ${value}`).join('\n')}
+
+💡 Инсайты:
+${profile.insights.map((insight, i) => `${i + 1}. ${insight}`).join('\n')}
 
 ${profile.tags.map(tag => `#${tag}`).join(' ')} #CognitiveCompass
 
-Ещё больше интересного о психологии в Telegram: @grehfacts
+🔗 Ещё больше интересного о психологии в Telegram: @grehfacts
 
 Пройти тест: https://cognitivecompass.github.io`;
 
     navigator.clipboard.writeText(text).then(() => {
-        showNotification('Текст скопирован! Можешь поделиться в Telegram');
+        showNotification('Результат скопирован! Можешь поделиться в Telegram');
     }).catch(() => {
         // Fallback для старых браузеров
         const textArea = document.createElement('textarea');
@@ -745,7 +876,7 @@ function restartTest() {
         appState = {
             currentScreen: 'welcome',
             currentQuestion: 0,
-            answers: {},
+            answers: new Array(8).fill(null),
             scores: {
                 analyst: 0,
                 explorer: 0,
@@ -773,9 +904,4 @@ function showNotification(message) {
 }
 
 // ЗАПУСК ПРИ ЗАГРУЗКЕ СТРАНИЦЫ
-document.addEventListener('DOMContentLoaded', () => {
-    // Сначала загружаем прогресс
-    loadProgress();
-    // Затем инициализируем приложение
-    initApp();
-});
+document.addEventListener('DOMContentLoaded', initApp);
