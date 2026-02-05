@@ -1056,7 +1056,7 @@ ${archetype.insights.map((insight, i) => `${i + 1}. ${insight}`).join('\n')}
 
 🔗 Ещё больше интересного о психологии в Telegram: @grehfacts
 
-Пройти тест: https://cognitivecompass.github.io
+Пройти тест: https://temaky4-wq.github.io/cognitive-compass/
 #CognitiveCompass #${archetype.name.replace(/\s+/g, '')}`;
 
     navigator.clipboard.writeText(text).then(() => {
