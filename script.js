@@ -960,10 +960,11 @@ function shareAsImage() {
                 </div>
                 <div style="
                     margin-top: 20px;
-                    color: rgba(255, 255, 255, 0.5);
+                    color: rgba(255, 255, 255, 0.7);
                     font-size: 1rem;
+                    font-weight: 600;
                 ">
-                    Пройдите тест на Cognitive Compass
+                    Пройдите тест: ${GITHUB_PAGES_URL}
                 </div>
             </div>
         </div>
@@ -1033,6 +1034,7 @@ function shareAsImage() {
 }
 
 // ПОДЕЛИТЬСЯ ТЕКСТОМ
+// ПОДЕЛИТЬСЯ ТЕКСТОМ
 function shareAsText() {
     const archetype = appState.archetype;
     const scores = appState.scaleScores;
@@ -1056,7 +1058,7 @@ ${archetype.insights.map((insight, i) => `${i + 1}. ${insight}`).join('\n')}
 
 🔗 Ещё больше интересного о психологии в Telegram: @grehfacts
 
-Пройти тест: https://temaky4-wq.github.io/cognitive-compass/
+Пройти тест: ${GITHUB_PAGES_URL}
 #CognitiveCompass #${archetype.name.replace(/\s+/g, '')}`;
 
     navigator.clipboard.writeText(text).then(() => {
