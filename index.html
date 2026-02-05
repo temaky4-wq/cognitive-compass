@@ -29,15 +29,15 @@
                         <div class="feature-icon">
                             <i class="fas fa-bolt"></i>
                         </div>
-                        <h3>8 вопросов</h3>
-                        <p>Быстро и по делу</p>
+                        <h3>16 вопросов</h3>
+                        <p>Достаточно для точности</p>
                     </div>
                     <div class="feature-card">
                         <div class="feature-icon">
                             <i class="fas fa-chart-network"></i>
                         </div>
-                        <h3>5 профилей</h3>
-                        <p>Узнай свой стиль</p>
+                        <h3>4 шкалы</h3>
+                        <p>Научный подход</p>
                     </div>
                     <div class="feature-card">
                         <div class="feature-icon">
@@ -48,12 +48,26 @@
                     </div>
                 </div>
                 
+                <div class="test-explanation">
+                    <h3><i class="fas fa-flask"></i> О тесте</h3>
+                    <p>Определяет 4 ключевых аспекта вашего мышления:</p>
+                    <ul>
+                        <li><strong>Аналитичность</strong> — как вы обрабатываете информацию</li>
+                        <li><strong>Толерантность к неопределённости</strong> — как реагируете на новое</li>
+                        <li><strong>Потребность в структуре</strong> — как организуете свою жизнь</li>
+                        <li><strong>Стиль принятия решений</strong> — как делаете выбор</li>
+                    </ul>
+                </div>
+                
                 <div class="cta-section">
                     <button id="start-btn" class="btn-glow">
-                        <span class="btn-text">Начать путешествие</span>
+                        <span class="btn-text">Начать тест</span>
                         <i class="fas fa-arrow-right btn-icon"></i>
                     </button>
-                    <p class="hint">Тест основан на концепциях когнитивной психологии</p>
+                    
+                    <div class="disclaimer">
+                        <p><i class="fas fa-info-circle"></i> <strong>Важно:</strong> Этот тест — инструмент для самоисследования, а не клиническая диагностика. Результаты носят вероятностный характер и могут меняться в зависимости от ситуации.</p>
+                    </div>
                 </div>
             </div>
             
@@ -70,7 +84,7 @@
                         <i class="fas fa-arrow-left"></i>
                     </button>
                     <div class="progress-info">
-                        <span id="current-question">1</span>/<span id="total-questions">8</span>
+                        <span id="current-question">1</span>/<span id="total-questions">16</span>
                     </div>
                 </div>
                 <div class="progress-container">
@@ -90,7 +104,7 @@
             </div>
             
             <div class="test-footer">
-                <div class="hint">Выберите ответ, который ближе всего к вам</div>
+                <div class="hint">Выберите ответ, который лучше всего описывает ваше поведение</div>
             </div>
         </section>
         
@@ -99,42 +113,46 @@
             <div class="result-header">
                 <div class="result-title">
                     <h2>Ваш когнитивный профиль</h2>
-                    <p>Определён по вашим ответам</p>
-                </div>
-                <div class="result-shape" id="result-shape">
-                    <!-- Анимированная форма будет здесь -->
+                    <p>На основе 16 поведенческих индикаторов</p>
                 </div>
             </div>
             
             <div class="result-wrapper">
-                <div class="result-main-card" id="result-main-card">
-                    <!-- Карточка результата генерируется скриптом -->
-                </div>
-                
-                <div class="result-details">
-                    <div class="detail-section">
-                        <h3><i class="fas fa-tachometer-alt"></i> Твои показатели</h3>
-                        <div class="metrics-grid" id="metrics-container">
-                            <!-- Метрики генерируются скриптом -->
-                        </div>
-                    </div>
-                    
-                    <div class="detail-section">
-                        <h3><i class="fas fa-lightbulb"></i> Инсайты о тебе</h3>
-                        <div class="insights" id="insights-container">
-                            <!-- Инсайты генерируются скриптом -->
-                        </div>
+                <!-- Блок с шкалами -->
+                <div class="scales-section">
+                    <h3><i class="fas fa-chart-bar"></i> Ваши показатели</h3>
+                    <div class="scales-container" id="scales-container">
+                        <!-- Шкалы генерируются скриптом -->
                     </div>
                 </div>
                 
-                <!-- Кнопка подписки на канал -->
+                <!-- Архетип как интерпретация -->
+                <div class="archetype-section" id="archetype-section">
+                    <!-- Архетип генерируется скриптом -->
+                </div>
+                
+                <!-- Дополнительная информация -->
+                <div class="additional-info">
+                    <div class="info-card">
+                        <h4><i class="fas fa-lightbulb"></i> Как интерпретировать</h4>
+                        <p>Эти шкалы показывают относительные предпочтения, а не абсолютные качества. Вы можете проявлять разные черты в разных ситуациях.</p>
+                    </div>
+                    <div class="info-card">
+                        <h4><i class="fas fa-exclamation-triangle"></i> Ограничения</h4>
+                        <p>Тест не измеряет интеллект, не ставит диагнозы и не предсказывает успех. Это лишь один из способов взглянуть на своё мышление.</p>
+                    </div>
+                </div>
+                
+                <!-- Секция подписки на канал -->
                 <div class="subscribe-section">
+                    <h3><i class="fab fa-telegram"></i> Хотите узнать больше?</h3>
+                    <p>В нашем Telegram-канале мы разбираем психологические исследования простым языком!</p>
                     <a href="https://t.me/grehfacts" target="_blank" class="btn-telegram">
                         <i class="fab fa-telegram"></i> Подписаться на @grehfacts
                     </a>
-                    <p class="subscribe-hint">Ещё больше интересного о психологии!</p>
                 </div>
                 
+                <!-- Кнопки действий -->
                 <div class="actions-container">
                     <button id="share-image-btn" class="btn-action btn-share">
                         <i class="fas fa-image"></i> Сохранить карточку
@@ -148,7 +166,7 @@
                 </div>
                 
                 <div class="result-footer">
-                    <p>Поделись своим профилем с друзьями и сравните результаты!</p>
+                    <p>Поделитесь своим профилем с друзьями!</p>
                     <div class="social-hint">
                         <i class="fas fa-hashtag"></i> CognitiveCompass
                     </div>
